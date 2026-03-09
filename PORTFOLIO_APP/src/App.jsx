@@ -1,5 +1,7 @@
 import { useState } from 'react'
 import './App.css'
+import profileImage from './assets/profile.jpg'
+import { GraduationCap, Sparkles, Target } from 'lucide-react'
 
 function App() {
   const [activeSection, setActiveSection] = useState('home')
@@ -17,7 +19,7 @@ function App() {
       {/* Navigation */}
       <nav className="navbar">
         <div className="nav-container">
-          <div className="nav-logo">NS</div>
+          <div className="nav-logo">HM</div>
           <ul className="nav-links">
             <li><a href="#home" onClick={() => scrollToSection('home')} className={activeSection === 'home' ? 'active' : ''}>Home</a></li>
             <li><a href="#about" onClick={() => scrollToSection('about')} className={activeSection === 'about' ? 'active' : ''}>About</a></li>
@@ -34,12 +36,16 @@ function App() {
       <section id="home" className="hero">
         <div className="hero-content">
           <div className="hero-text">
-            <h1 className="hero-name">Nadeesha Samanmali</h1>
+            <h1 className="hero-name">Harini Malshini</h1>
             <h2 className="hero-title">Software Engineering Undergraduate</h2>
             <p className="hero-summary">
-              I am a Software Engineering undergraduate passionate about web development, 
-              mobile applications, and UI/UX design. I enjoy building user-friendly applications 
-              and solving real-world problems using modern technologies.
+              I’m a passionate Software Engineering undergraduate who enjoys 
+              transforming ideas into real-world digital solutions. 
+              I love exploring modern technologies, building clean user interfaces,
+              and solving problems through code. Currently expanding my skills 
+              in web development, programming, and software design while working 
+              on practical projects. Welcome to my portfolio—take a look at my 
+                              work and journey in tech.
             </p>
             <div className="hero-links">
               <a href="https://github.com" target="_blank" rel="noopener noreferrer" className="hero-btn">
@@ -54,28 +60,10 @@ function App() {
             </div>
           </div>
           <div className="hero-visual">
-            <div className="code-block">
-              <div className="code-header">
-                <span className="dot red"></span>
-                <span className="dot yellow"></span>
-                <span className="dot green"></span>
+            <div className="profile-container">
+              <div className="profile-frame">
+                <img src={profileImage} alt="Profile" className="profile-image" />
               </div>
-              <pre className="code-content">
-                <code>
-{`const developer = {
-  name: "Nadeesha",
-  role: "Software Engineer",
-  skills: ["React", "Java", "Python"],
-  passion: "Building solutions"
-};
-
-while(alive) {
-  learn();
-  code();
-  innovate();
-}`}
-                </code>
-              </pre>
             </div>
           </div>
         </div>
@@ -91,24 +79,34 @@ while(alive) {
           <h2 className="section-title">About Me</h2>
           <div className="about-content">
             <div className="about-card">
-              <div className="about-icon">🎓</div>
+              <div className="about-icon">
+                <GraduationCap size={40} />
+              </div>
               <h3>Background</h3>
               <p>I am a dedicated Software Engineering undergraduate with a strong foundation in programming and software development. I actively seek opportunities to apply my knowledge to real-world projects and contribute to innovative solutions.</p>
             </div>
             <div className="about-card">
-              <div className="about-icon">🎯</div>
+              <div className="about-icon">
+                <Sparkles size={40} />
+              </div>
               <h3>Interests</h3>
               <ul className="interest-list">
                 <li>Web Development</li>
                 <li>Mobile App Development</li>
                 <li>Database Systems</li>
                 <li>UI/UX Design</li>
+                <li>Software Application Development</li>
+                <li>Exploring Modern Software Frameworks</li>
+                <li>Technology Trends and Innovation</li>
+                <li>Building Practical Software Projects</li>
               </ul>
             </div>
             <div className="about-card">
-              <div className="about-icon">🚀</div>
+              <div className="about-icon">
+                <Target size={40} />
+              </div>
               <h3>Career Goals</h3>
-              <p>Aspiring to become a skilled Software Developer / Full Stack Developer. Committed to continuous learning and contributing to impactful technology solutions.</p>
+              <p>My goal is to become a skilled Software Engineer who builds reliable and user-friendly software solutions. I aim to continuously improve my knowledge in programming, web technologies, and modern development frameworks. I am passionate about solving real-world problems through innovative and efficient code. I also strive to collaborate with professional teams and gain industry experience through challenging projects. Ultimately, I hope to contribute to impactful technology that improves people’s daily lives.</p>
             </div>
           </div>
         </div>
