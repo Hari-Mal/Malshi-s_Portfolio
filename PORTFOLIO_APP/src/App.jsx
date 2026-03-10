@@ -1,10 +1,203 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import './App.css'
 import profileImage from './assets/profile.jpg'
-import { GraduationCap, Sparkles, Target } from 'lucide-react'
+import { GraduationCap, Sparkles, Target, Code, Globe, Smartphone, Database, Wrench, ChevronDown, Award, Calendar, ExternalLink } from 'lucide-react'
 
 function App() {
   const [activeSection, setActiveSection] = useState('home')
+  const [expandedCategory, setExpandedCategory] = useState(null)
+  const [skillsVisible, setSkillsVisible] = useState(false)
+  const [animatedSkills, setAnimatedSkills] = useState({})
+  const [certificatesVisible, setCertificatesVisible] = useState(false)
+  const [selectedCert, setSelectedCert] = useState(null)
+
+  // Add your certificates here - easy to modify!
+  const certificatesData = [
+    {
+      id: 1,
+      title: "Web Development Certification",
+      issuer: "Complete Web Development Bootcamp",
+      date: "2023",
+      description: "Comprehensive web development training covering HTML, CSS, JavaScript, and modern frameworks.",
+      color: "#ff6b6b",
+      skills: ["HTML", "CSS", "JavaScript", "React", "Node.js"]
+    },
+    {
+      id: 2,
+      title: "React Development Course",
+      issuer: "Modern React with Hooks",
+      date: "2023",
+      description: "Advanced React programming with hooks, context API, and best practices.",
+      color: "#a29bfe",
+      skills: ["React", "Hooks", "Context API", "Redux"]
+    },
+    {
+      id: 3,
+      title: "Java Programming",
+      issuer: "Object-Oriented Programming Certification",
+      date: "2022",
+      description: "Core Java programming with OOP concepts, data structures, and algorithms.",
+      color: "#00b894",
+      skills: ["Java", "OOP", "Data Structures", "Algorithms"]
+    },
+    {
+      id: 4,
+      title: "Hack Like A Girl 3.0",
+      issuer: "Tech Hackathon",
+      date: "2023",
+      description: "Participant in women's technology hackathon focusing on innovative solutions.",
+      color: "#fdcb6e",
+      skills: ["Teamwork", "Problem Solving", "Innovation"]
+    },
+    {
+      id: 5,
+      title: "Python for Data Science",
+      issuer: "Data Science Academy",
+      date: "2023",
+      description: "Learn Python programming for data analysis, visualization, and machine learning basics.",
+      color: "#74b9ff",
+      skills: ["Python", "Pandas", "NumPy", "Matplotlib"]
+    },
+    {
+      id: 6,
+      title: "UI/UX Design Fundamentals",
+      issuer: "Design Institute",
+      date: "2023",
+      description: "User interface and user experience design principles, wireframing, and prototyping.",
+      color: "#fd79a8",
+      skills: ["Figma", "Wireframing", "Prototyping", "User Research"]
+    },
+    {
+      id: 7,
+      title: "Mobile App Development",
+      issuer: "React Native Workshop",
+      date: "2023",
+      description: "Cross-platform mobile app development using React Native and Expo.",
+      color: "#00cec9",
+      skills: ["React Native", "Expo", "Mobile UI", "API Integration"]
+    },
+    {
+      id: 8,
+      title: "Database Management",
+      issuer: "SQL Fundamentals Course",
+      date: "2022",
+      description: "Comprehensive database design, SQL queries, and MySQL database management.",
+      color: "#e17055",
+      skills: ["MySQL", "SQL", "Database Design", "Query Optimization"]
+    }
+  ]
+
+  // How to add more certificates:
+  // Simply add a new object to certificatesData array with:
+  // {
+  //   id: 9,
+  //   title: "Your Certificate Title",
+  //   issuer: "Issuing Organization",
+  //   date: "2024",
+  //   description: "Description of what you learned",
+  //   color: "#hexcolor",
+  //   skills: ["Skill 1", "Skill 2"]
+  // }
+
+  const skillsData = [
+    {
+      id: 'programming',
+      title: 'Programming Languages',
+      icon: <Code size={24} />,
+      skills: [
+        { name: 'Java', level: 85 },
+        { name: 'Python', level: 80 },
+        { name: 'JavaScript', level: 90 },
+        { name: 'C', level: 75 },
+        { name: 'C++', level: 70 }
+      ]
+    },
+    {
+      id: 'web',
+      title: 'Web Technologies',
+      icon: <Globe size={24} />,
+      skills: [
+        { name: 'HTML', level: 95 },
+        { name: 'CSS', level: 90 },
+        { name: 'React', level: 85 },
+        { name: 'PHP', level: 75 },
+        { name: 'CodeIgniter', level: 70 }
+      ]
+    },
+    {
+      id: 'mobile',
+      title: 'Mobile Development',
+      icon: <Smartphone size={24} />,
+      skills: [
+        { name: 'React Native', level: 80 },
+        { name: 'Android Development', level: 75 }
+      ]
+    },
+    {
+      id: 'database',
+      title: 'Database',
+      icon: <Database size={24} />,
+      skills: [
+        { name: 'MySQL', level: 85 },
+        { name: 'SQL', level: 80 }
+      ]
+    },
+    {
+      id: 'tools',
+      title: 'Tools & Platforms',
+      icon: <Wrench size={24} />,
+      skills: [
+        { name: 'Git', level: 90 },
+        { name: 'GitHub', level: 85 },
+        { name: 'VS Code', level: 95 },
+        { name: 'Cisco Packet Tracer', level: 75 },
+        { name: 'Figma', level: 80 }
+      ]
+    }
+  ]
+
+  const toggleCategory = (categoryId) => {
+    setExpandedCategory(expandedCategory === categoryId ? null : categoryId)
+  }
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const skillsSection = document.getElementById('skills')
+      if (skillsSection) {
+        const rect = skillsSection.getBoundingClientRect()
+        if (rect.top < window.innerHeight * 0.8) {
+          setSkillsVisible(true)
+        }
+      }
+    }
+    window.addEventListener('scroll', handleScroll)
+    handleScroll()
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
+
+  useEffect(() => {
+    if (skillsVisible && expandedCategory) {
+      const timer = setTimeout(() => {
+        setAnimatedSkills(prev => ({ ...prev, [expandedCategory]: true }))
+      }, 100)
+      return () => clearTimeout(timer)
+    }
+  }, [skillsVisible, expandedCategory])
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const certSection = document.getElementById('achievements')
+      if (certSection) {
+        const rect = certSection.getBoundingClientRect()
+        if (rect.top < window.innerHeight * 0.8) {
+          setCertificatesVisible(true)
+        }
+      }
+    }
+    window.addEventListener('scroll', handleScroll)
+    handleScroll()
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
 
   const scrollToSection = (sectionId) => {
     const element = document.getElementById(sectionId)
@@ -116,51 +309,38 @@ function App() {
       <section id="skills" className="section skills">
         <div className="container">
           <h2 className="section-title">Technical Skills</h2>
+          <p className="section-subtitle">Click on a category to explore my skills</p>
           <div className="skills-grid">
-            <div className="skill-category">
-              <h3>Programming Languages</h3>
-              <div className="skill-tags">
-                <span className="skill-tag">Java</span>
-                <span className="skill-tag">Python</span>
-                <span className="skill-tag">JavaScript</span>
-                <span className="skill-tag">C</span>
-                <span className="skill-tag">C++</span>
+            {skillsData.map((category, index) => (
+              <div 
+                key={category.id} 
+                className={`skill-card ${expandedCategory === category.id ? 'expanded' : ''} ${skillsVisible ? 'visible' : ''}`}
+                style={{ animationDelay: `${index * 0.1}s` }}
+              >
+                <div 
+                  className="skill-card-header"
+                  onClick={() => toggleCategory(category.id)}
+                >
+                  <div className="skill-icon">{category.icon}</div>
+                  <h3>{category.title}</h3>
+                  <span className="skill-count">{category.skills.length} skills</span>
+                  <ChevronDown className={`chevron ${expandedCategory === category.id ? 'rotated' : ''}`} size={20} />
+                </div>
+                <div className={`skill-card-content ${expandedCategory === category.id ? 'open' : ''}`}>
+                  <div className="skill-tags-interactive">
+                    {category.skills.map((skill, skillIndex) => (
+                      <div 
+                        key={skill.name} 
+                        className={`skill-pill ${animatedSkills[category.id] ? 'animate' : ''}`}
+                        style={{ animationDelay: `${skillIndex * 0.08}s` }}
+                      >
+                        <span className="skill-pill-name">{skill.name}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
               </div>
-            </div>
-            <div className="skill-category">
-              <h3>Web Technologies</h3>
-              <div className="skill-tags">
-                <span className="skill-tag">HTML</span>
-                <span className="skill-tag">CSS</span>
-                <span className="skill-tag">React</span>
-                <span className="skill-tag">PHP</span>
-                <span className="skill-tag">CodeIgniter</span>
-              </div>
-            </div>
-            <div className="skill-category">
-              <h3>Mobile Development</h3>
-              <div className="skill-tags">
-                <span className="skill-tag">React Native</span>
-                <span className="skill-tag">Android Development</span>
-              </div>
-            </div>
-            <div className="skill-category">
-              <h3>Database</h3>
-              <div className="skill-tags">
-                <span className="skill-tag">MySQL</span>
-                <span className="skill-tag">SQL</span>
-              </div>
-            </div>
-            <div className="skill-category">
-              <h3>Tools & Platforms</h3>
-              <div className="skill-tags">
-                <span className="skill-tag">Git</span>
-                <span className="skill-tag">GitHub</span>
-                <span className="skill-tag">VS Code</span>
-                <span className="skill-tag">Cisco Packet Tracer</span>
-                <span className="skill-tag">Figma</span>
-              </div>
-            </div>
+            ))}
           </div>
         </div>
       </section>
@@ -288,39 +468,69 @@ function App() {
       <section id="achievements" className="section achievements">
         <div className="container">
           <h2 className="section-title">Achievements & Certifications</h2>
-          <div className="achievements-grid">
-            
-            <div className="achievement-card">
-              <div className="achievement-icon">🏆</div>
-              <h3>Hack Like A Girl 3.0</h3>
-              <p>Participant - Tech Hackathon</p>
-              <span className="achievement-date">2023</span>
-            </div>
-
-            <div className="achievement-card">
-              <div className="achievement-icon">📜</div>
-              <h3>Web Development Certification</h3>
-              <p>Complete Web Development Bootcamp</p>
-              <span className="achievement-date">2023</span>
-            </div>
-
-            <div className="achievement-card">
-              <div className="achievement-icon">⚛️</div>
-              <h3>React Development Course</h3>
-              <p>Modern React with Hooks</p>
-              <span className="achievement-date">2023</span>
-            </div>
-
-            <div className="achievement-card">
-              <div className="achievement-icon">💻</div>
-              <h3>Java Programming</h3>
-              <p>Object-Oriented Programming Certification</p>
-              <span className="achievement-date">2022</span>
-            </div>
-
+          <p className="section-subtitle">Click on a certificate to view details</p>
+          <div className={`certificates-grid ${certificatesVisible ? 'visible' : ''}`}>
+            {certificatesData.map((cert, index) => (
+              <div 
+                key={cert.id} 
+                className="certificate-card"
+                onClick={() => setSelectedCert(cert)}
+                style={{ 
+                  animationDelay: `${index * 0.15}s`,
+                  '--cert-color': cert.color 
+                }}
+              >
+                <div className="certificate-badge" style={{ background: `linear-gradient(135deg, ${cert.color} 0%, ${cert.color}99 100%)` }}>
+                  <Award size={32} />
+                </div>
+                <div className="certificate-content">
+                  <h3 className="certificate-title">{cert.title}</h3>
+                  <p className="certificate-issuer">{cert.issuer}</p>
+                  <p className="certificate-description">{cert.description}</p>
+                  <div className="certificate-footer">
+                    <span className="certificate-date">
+                      <Calendar size={14} />
+                      {cert.date}
+                    </span>
+                    <span className="view-more">View Details →</span>
+                  </div>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </section>
+
+      {/* Certificate Modal */}
+      {selectedCert && (
+        <div className="cert-modal-overlay" onClick={() => setSelectedCert(null)}>
+          <div className="cert-modal" onClick={(e) => e.stopPropagation()} style={{ '--cert-color': selectedCert.color }}>
+            <button className="cert-modal-close" onClick={() => setSelectedCert(null)}>×</button>
+            <div className="cert-modal-header">
+              <div className="cert-modal-badge" style={{ background: `linear-gradient(135deg, ${selectedCert.color} 0%, ${selectedCert.color}99 100%)` }}>
+                <Award size={48} />
+              </div>
+              <h2 className="cert-modal-title">{selectedCert.title}</h2>
+              <p className="cert-modal-issuer">{selectedCert.issuer}</p>
+            </div>
+            <div className="cert-modal-body">
+              <div className="cert-modal-info">
+                <Calendar size={18} />
+                <span>{selectedCert.date}</span>
+              </div>
+              <p className="cert-modal-description">{selectedCert.description}</p>
+              <div className="cert-modal-skills">
+                <h4>Skills Learned</h4>
+                <div className="cert-skills-list">
+                  {selectedCert.skills && selectedCert.skills.map((skill, idx) => (
+                    <span key={idx} className="cert-skill-tag">{skill}</span>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Resume Section */}
       <section id="resume" className="section resume">
