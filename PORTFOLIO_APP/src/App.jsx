@@ -354,19 +354,22 @@ function App() {
             
             <div className="project-card">
               <div className="project-header">
-                <h3>🚚 Transportation & Logistics Mobile App</h3>
+                <h3>Student Management System – Java OOP Implementation</h3>
               </div>
               <p className="project-description">
-                A comprehensive mobile application for transportation and logistics management. 
-                Features include user authentication, real-time tracking, and booking functionality.
+                This project is a Java-based Student Management System developed in NetBeans to manage undergraduate and postgraduate students. 
+                It applies OOP concepts such as Encapsulation, Inheritance, and Polymorphism to organize student data.
+                Undergraduate and postgraduate students are handled using separate subclasses with customized performance evaluation methods.
+                Student performance is classified based on GPA and research scores. 
+                The system demonstrates practical use of Java OOP for academic student evaluation.
               </p>
               <div className="project-tech">
-                <span>React Native</span>
-                <span>React Navigation</span>
-                <span>Expo</span>
+                <span>Java</span>
+                <span>NetBeans IDE</span>
+                <span>OOP Concepts</span>
               </div>
               <div className="project-links">
-                <a href="https://github.com" target="_blank" rel="noopener noreferrer" className="project-link">
+                <a href="https://github.com/Hari-Mal/Student-Management-System-Java-OOP-Implementation-.git" target="_blank" rel="noopener noreferrer" className="project-link">
                   View Code →
                 </a>
               </div>
@@ -374,19 +377,25 @@ function App() {
 
             <div className="project-card">
               <div className="project-header">
-                <h3>🎨 Ceylon Arts & Crafts Website</h3>
+                <h3>Eco-Friendly-Awareness-Website</h3>
               </div>
               <p className="project-description">
-                An elegant e-commerce platform for showcasing and selling traditional Sri Lankan 
-                arts and crafts. Includes navigation, product catalog, and social media integration.
+                This project is an eco-friendly awareness website that educates users about sustainable living practices. 
+                It is built using Vue.js for a dynamic and reactive user interface. 
+                JavaScript is used to add interactivity such as navigation and real-time feedback display.
+                 HTML5 structures the website content, while CSS provides a clean green-themed design. 
+                 The website is also responsive so it works well on different devices.
               </p>
               <div className="project-tech">
-                <span>CodeIgniter</span>
-                <span>PHP</span>
-                <span>MySQL</span>
+                <span>HTML5</span>
+                 <span>CSS</span>
+                <span>Vue.js</span>
+                <span>JavaScript</span>
+                
+               
               </div>
               <div className="project-links">
-                <a href="https://github.com" target="_blank" rel="noopener noreferrer" className="project-link">
+                <a href="https://github.com/Hari-Mal/Eco-Friendly-Awareness-Website-Vue.js-CSS-JavaScript-.git" target="_blank" rel="noopener noreferrer" className="project-link">
                   View Code →
                 </a>
               </div>
@@ -394,19 +403,26 @@ function App() {
 
             <div className="project-card">
               <div className="project-header">
-                <h3>🌐 Network Configuration Lab</h3>
+                <h3>Student-Performance-Analysis</h3>
               </div>
               <p className="project-description">
-                Designed and configured enterprise-level network infrastructure using Cisco 
-                Packet Tracer. Implemented routers, switches, and firewall configurations.
+               This project analyzes student performance using exploratory data analysis (EDA) techniques.
+                Python is used in Jupyter Notebook to examine relationships between demographics, study habits, and exam scores.
+                 Data visualization such as histograms, box plots, and correlation heatmaps are used to understand patterns. 
+                 Statistical tests like t-test, ANOVA, and chi-square are applied to identify significant differences. 
+               The analysis highlights the impact of test preparation and parental education on student performance.
               </p>
               <div className="project-tech">
-                <span>Cisco Packet Tracer</span>
-                <span>Network Security</span>
-                <span>Routing & Switching</span>
+                <span>Python</span>
+                <span>Jupyter Notebook</span>
+                <span>Pandas</span>
+                <span> Matplotlib</span>
+                <span> Seaborn</span>
+                <span> SciPy</span>
+
               </div>
               <div className="project-links">
-                <a href="https://github.com" target="_blank" rel="noopener noreferrer" className="project-link">
+                <a href="https://github.com/Hari-Mal/Student-Performance-Analysis-EDA-Statistical-Testing-.git" target="_blank" rel="noopener noreferrer" className="project-link">
                   View Code →
                 </a>
               </div>
