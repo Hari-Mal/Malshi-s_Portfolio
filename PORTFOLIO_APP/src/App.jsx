@@ -26,87 +26,47 @@ function App() {
   const skillInputRef = useRef(null)
 
   const [certificatesData, setCertificatesData] = useState([
+    
+  ])
+
+  const [projectsData] = useState([
     {
       id: 1,
-      title: "Web Development Certification",
-      issuer: "Complete Web Development Bootcamp",
-      date: "2023",
-      description: "Comprehensive web development training covering HTML, CSS, JavaScript, and modern frameworks.",
-      color: "#ff6b6b",
-      skills: ["HTML", "CSS", "JavaScript", "React", "Node.js"],
-      imageUrl: ''
+      title: "Student Management System",
+      githubUrl: "https://github.com/harinimalshini/student-management-java",
+      techStack: ["Java", "OOP", "NetBeans", "Swing"],
+      description: "Complete student management system with CRUD operations, user authentication, and reporting features. Implements OOP principles with clean architecture and GUI interface."
     },
     {
       id: 2,
-      title: "React Development Course",
-      issuer: "Modern React with Hooks",
-      date: "2023",
-      description: "Advanced React programming with hooks, context API, and best practices.",
-      color: "#a29bfe",
-      skills: ["React", "Hooks", "Context API", "Redux"],
-      imageUrl: ''
+      title: "Portfolio Website",
+      githubUrl: "https://github.com/harinimalshini/portfolio-react",
+      techStack: ["React", "Vite", "Tailwind CSS", "JavaScript"],
+      description: "This very portfolio website built with modern React 19, Vite build tool, custom CSS animations, and responsive design using CSS Grid and Flexbox."
     },
     {
       id: 3,
-      title: "Java Programming",
-      issuer: "Object-Oriented Programming Certification",
-      date: "2022",
-      description: "Core Java programming with OOP concepts, data structures, and algorithms.",
-      color: "#00b894",
-      skills: ["Java", "OOP", "Data Structures", "Algorithms"],
-      imageUrl: ''
+      title: "E-Commerce Platform",
+      githubUrl: "https://github.com/harinimalshini/ecommerce-php",
+      techStack: ["PHP", "CodeIgniter", "MySQL", "Bootstrap"],
+      description: "Full-stack e-commerce application with shopping cart, payment gateway integration, admin dashboard, and order management system."
     },
     {
       id: 4,
-      title: "Hack Like A Girl 3.0",
-      issuer: "Tech Hackathon",
-      date: "2023",
-      description: "Participant in women's technology hackathon focusing on innovative solutions.",
-      color: "#fdcb6e",
-      skills: ["Teamwork", "Problem Solving", "Innovation"],
-      imageUrl: ''
+      title: "Task Management App",
+      githubUrl: "https://github.com/harinimalshini/task-manager-react",
+      techStack: ["React Native", "Expo", "Firebase", "Redux"],
+      description: "Mobile task management app with real-time sync, offline support, drag & drop UI, and push notifications using cross-platform React Native."
     },
     {
       id: 5,
-      title: "Python for Data Science",
-      issuer: "Data Science Academy",
-      date: "2023",
-      description: "Learn Python programming for data analysis, visualization, and machine learning basics.",
-      color: "#74b9ff",
-      skills: ["Python", "Pandas", "NumPy", "Matplotlib"],
-      imageUrl: ''
-    },
-    {
-      id: 6,
-      title: "UI/UX Design Fundamentals",
-      issuer: "Design Institute",
-      date: "2023",
-      description: "User interface and user experience design principles, wireframing, and prototyping.",
-      color: "#fd79a8",
-      skills: ["Figma", "Wireframing", "Prototyping", "User Research"],
-      imageUrl: ''
-    },
-    {
-      id: 7,
-      title: "Mobile App Development",
-      issuer: "React Native Workshop",
-      date: "2023",
-      description: "Cross-platform mobile app development using React Native and Expo.",
-      color: "#00cec9",
-      skills: ["React Native", "Expo", "Mobile UI", "API Integration"],
-      imageUrl: ''
-    },
-    {
-      id: 8,
-      title: "Database Management",
-      issuer: "SQL Fundamentals Course",
-      date: "2022",
-      description: "Comprehensive database design, SQL queries, and MySQL database management.",
-      color: "#e17055",
-      skills: ["MySQL", "SQL", "Database Design", "Query Optimization"],
-      imageUrl: ''
+      title: "Inventory Management",
+      githubUrl: "https://github.com/harinimalshini/inventory-python",
+      techStack: ["Python", "Tkinter", "SQLite", "Pandas"],
+      description: "Desktop inventory system with barcode scanning, stock tracking, sales reporting, and data analytics dashboard using Python GUI framework."
     }
   ])
+
 
   const STORAGE_KEY = 'portfolio_certificates'
 
@@ -429,19 +389,32 @@ function App() {
         <div className="container">
           <h2 className="section-title">Projects</h2>
           <div className="projects-grid">
-            {/* Projects cards - keeping original content */}
-            <div className="project-card">
-              <h3>Student Management System</h3>
-              <p>Java OOP implementation with NetBeans</p>
-              <div className="project-tech">
-                <span>Java</span><span>OOP</span><span>NetBeans</span>
+            {projectsData.map((project) => (
+              <div key={project.id} className="project-card">
+                <h3>{project.title}</h3>
+                <p className="project-description">{project.description}</p>
+                <div className="project-tech">
+                  {project.techStack.map((tech, idx) => (
+                    <span key={idx}>{tech}</span>
+                  ))}
+                </div>
+                <div className="project-links">
+                  <a 
+                    href={project.githubUrl} 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="project-github-btn"
+                  >
+                    <ExternalLink size={16} />
+                    View on GitHub
+                  </a>
+                </div>
               </div>
-              <a href="#" className="project-link">View Code →</a>
-            </div>
-            {/* Add more project cards similarly */}
+            ))}
           </div>
         </div>
       </section>
+
 
       {/* Education */}
       <section id="education" className="section education">
