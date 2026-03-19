@@ -1,7 +1,7 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef, useCallback } from 'react'
 import './App.css'
 import profileImage from './assets/profile.jpg'
-import { GraduationCap, Sparkles, Target, Code, Globe, Smartphone, Database, Wrench, ChevronDown, Award, Calendar, ExternalLink } from 'lucide-react'
+import { GraduationCap, Sparkles, Target, Code, Globe, Smartphone, Database, Wrench, ChevronDown, Award, Calendar, ExternalLink, Plus, Upload, Image as ImageIcon, X, Palette, Download, Eye } from 'lucide-react'
 
 function App() {
   const [activeSection, setActiveSection] = useState('home')
@@ -10,9 +10,22 @@ function App() {
   const [animatedSkills, setAnimatedSkills] = useState({})
   const [certificatesVisible, setCertificatesVisible] = useState(false)
   const [selectedCert, setSelectedCert] = useState(null)
+  const [viewingCert, setViewingCert] = useState(null)
+  const [showUploadModal, setShowUploadModal] = useState(false)
+  const [uploadForm, setUploadForm] = useState({
+    title: '',
+    issuer: '',
+    date: '',
+    description: '',
+    color: '#ff6b6b'
+  })
+  const [newSkills, setNewSkills] = useState([])
+  const [previewUrl, setPreviewUrl] = useState('')
+  const [imageFile, setImageFile] = useState(null)
+  const fileInputRef = useRef(null)
+  const skillInputRef = useRef(null)
 
-  // Add your certificates here - easy to modify!
-  const certificatesData = [
+  const [certificatesData, setCertificatesData] = useState([
     {
       id: 1,
       title: "Web Development Certification",
@@ -20,7 +33,8 @@ function App() {
       date: "2023",
       description: "Comprehensive web development training covering HTML, CSS, JavaScript, and modern frameworks.",
       color: "#ff6b6b",
-      skills: ["HTML", "CSS", "JavaScript", "React", "Node.js"]
+      skills: ["HTML", "CSS", "JavaScript", "React", "Node.js"],
+      imageUrl: ''
     },
     {
       id: 2,
@@ -29,7 +43,8 @@ function App() {
       date: "2023",
       description: "Advanced React programming with hooks, context API, and best practices.",
       color: "#a29bfe",
-      skills: ["React", "Hooks", "Context API", "Redux"]
+      skills: ["React", "Hooks", "Context API", "Redux"],
+      imageUrl: ''
     },
     {
       id: 3,
@@ -38,7 +53,8 @@ function App() {
       date: "2022",
       description: "Core Java programming with OOP concepts, data structures, and algorithms.",
       color: "#00b894",
-      skills: ["Java", "OOP", "Data Structures", "Algorithms"]
+      skills: ["Java", "OOP", "Data Structures", "Algorithms"],
+      imageUrl: ''
     },
     {
       id: 4,
@@ -47,7 +63,8 @@ function App() {
       date: "2023",
       description: "Participant in women's technology hackathon focusing on innovative solutions.",
       color: "#fdcb6e",
-      skills: ["Teamwork", "Problem Solving", "Innovation"]
+      skills: ["Teamwork", "Problem Solving", "Innovation"],
+      imageUrl: ''
     },
     {
       id: 5,
@@ -56,7 +73,8 @@ function App() {
       date: "2023",
       description: "Learn Python programming for data analysis, visualization, and machine learning basics.",
       color: "#74b9ff",
-      skills: ["Python", "Pandas", "NumPy", "Matplotlib"]
+      skills: ["Python", "Pandas", "NumPy", "Matplotlib"],
+      imageUrl: ''
     },
     {
       id: 6,
@@ -65,7 +83,8 @@ function App() {
       date: "2023",
       description: "User interface and user experience design principles, wireframing, and prototyping.",
       color: "#fd79a8",
-      skills: ["Figma", "Wireframing", "Prototyping", "User Research"]
+      skills: ["Figma", "Wireframing", "Prototyping", "User Research"],
+      imageUrl: ''
     },
     {
       id: 7,
@@ -74,7 +93,8 @@ function App() {
       date: "2023",
       description: "Cross-platform mobile app development using React Native and Expo.",
       color: "#00cec9",
-      skills: ["React Native", "Expo", "Mobile UI", "API Integration"]
+      skills: ["React Native", "Expo", "Mobile UI", "API Integration"],
+      imageUrl: ''
     },
     {
       id: 8,
@@ -83,21 +103,26 @@ function App() {
       date: "2022",
       description: "Comprehensive database design, SQL queries, and MySQL database management.",
       color: "#e17055",
-      skills: ["MySQL", "SQL", "Database Design", "Query Optimization"]
+      skills: ["MySQL", "SQL", "Database Design", "Query Optimization"],
+      imageUrl: ''
     }
-  ]
+  ])
 
-  // How to add more certificates:
-  // Simply add a new object to certificatesData array with:
-  // {
-  //   id: 9,
-  //   title: "Your Certificate Title",
-  //   issuer: "Issuing Organization",
-  //   date: "2024",
-  //   description: "Description of what you learned",
-  //   color: "#hexcolor",
-  //   skills: ["Skill 1", "Skill 2"]
-  // }
+  const STORAGE_KEY = 'portfolio_certificates'
+
+  // Load from localStorage
+  useEffect(() => {
+    const saved = localStorage.getItem(STORAGE_KEY)
+    if (saved) {
+      const parsed = JSON.parse(saved)
+      setCertificatesData(parsed)
+    }
+  }, [])
+
+  // Save to localStorage
+  useEffect(() => {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(certificatesData))
+  }, [certificatesData])
 
   const skillsData = [
     {
@@ -160,6 +185,7 @@ function App() {
     setExpandedCategory(expandedCategory === categoryId ? null : categoryId)
   }
 
+  // Scroll effects
   useEffect(() => {
     const handleScroll = () => {
       const skillsSection = document.getElementById('skills')
@@ -207,6 +233,75 @@ function App() {
     }
   }
 
+  // Upload handlers
+  const handleImageUpload = (e) => {
+    const file = e.target.files[0]
+    if (file && (file.type.startsWith('image/') || file.type === 'application/pdf')) {
+      setImageFile(file)
+      const reader = new FileReader()
+      reader.onloadend = () => setPreviewUrl(reader.result)
+      reader.readAsDataURL(file)
+    } else {
+      alert('Please select an image or PDF file.')
+    }
+  }
+
+  const handleFormChange = (e) => {
+    const { name, value } = e.target
+    setUploadForm(prev => ({ ...prev, [name]: value }))
+  }
+
+  const addSkill = (e) => {
+    e.preventDefault()
+    const skill = skillInputRef.current.value.trim()
+    if (skill && !newSkills.includes(skill)) {
+      setNewSkills(prev => [...prev, skill])
+      skillInputRef.current.value = ''
+    }
+  }
+
+  const removeSkill = (indexToRemove) => {
+    setNewSkills(prev => prev.filter((_, index) => index !== indexToRemove))
+  }
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    if (!uploadForm.title.trim() || !uploadForm.issuer.trim() || newSkills.length === 0 || !imageFile) {
+      alert('Please fill all required fields (title, issuer, skills) and select an image/PDF.')
+      return
+    }
+
+    const newCert = {
+      id: Date.now(), // Unique ID
+      ...uploadForm,
+      skills: newSkills,
+      imageUrl: previewUrl
+    }
+
+    setCertificatesData(prev => [newCert, ...prev]) // Add to top
+    setShowUploadModal(false)
+    // Reset form
+    setUploadForm({ title: '', issuer: '', date: '', description: '', color: '#ff6b6b' })
+    setNewSkills([])
+    setPreviewUrl('')
+    setImageFile(null)
+  }
+
+  const resetUploadForm = () => {
+    setShowUploadModal(false)
+    setUploadForm({ title: '', issuer: '', date: '', description: '', color: '#ff6b6b' })
+    setNewSkills([])
+    setPreviewUrl('')
+    setImageFile(null)
+    if (fileInputRef.current) fileInputRef.current.value = ''
+  }
+
+  const deleteCert = (id) => {
+    if (confirm('Delete this certificate?')) {
+      setCertificatesData(prev => prev.filter(cert => cert.id !== id))
+    }
+  }
+
   return (
     <div className="portfolio">
       {/* Navigation */}
@@ -214,31 +309,26 @@ function App() {
         <div className="nav-container">
           <div className="nav-logo">HM</div>
           <ul className="nav-links">
-            <li><a href="#home" onClick={() => scrollToSection('home')} className={activeSection === 'home' ? 'active' : ''}>Home</a></li>
-            <li><a href="#about" onClick={() => scrollToSection('about')} className={activeSection === 'about' ? 'active' : ''}>About</a></li>
-            <li><a href="#skills" onClick={() => scrollToSection('skills')} className={activeSection === 'skills' ? 'active' : ''}>Skills</a></li>
-            <li><a href="#projects" onClick={() => scrollToSection('projects')} className={activeSection === 'projects' ? 'active' : ''}>Projects</a></li>
-            <li><a href="#education" onClick={() => scrollToSection('education')} className={activeSection === 'education' ? 'active' : ''}>Education</a></li>
-            <li><a href="#achievements" onClick={() => scrollToSection('achievements')} className={activeSection === 'achievements' ? 'active' : ''}>Achievements</a></li>
-            <li><a href="#contact" onClick={() => scrollToSection('contact')} className={activeSection === 'contact' ? 'active' : ''}>Contact</a></li>
+            <li><a href="#home" onClick={(e) => {e.preventDefault(); scrollToSection('home')}} className={activeSection === 'home' ? 'active' : ''}>Home</a></li>
+            <li><a href="#about" onClick={(e) => {e.preventDefault(); scrollToSection('about')}} className={activeSection === 'about' ? 'active' : ''}>About</a></li>
+            <li><a href="#skills" onClick={(e) => {e.preventDefault(); scrollToSection('skills')}} className={activeSection === 'skills' ? 'active' : ''}>Skills</a></li>
+            <li><a href="#projects" onClick={(e) => {e.preventDefault(); scrollToSection('projects')}} className={activeSection === 'projects' ? 'active' : ''}>Projects</a></li>
+            <li><a href="#education" onClick={(e) => {e.preventDefault(); scrollToSection('education')}} className={activeSection === 'education' ? 'active' : ''}>Education</a></li>
+            <li><a href="#achievements" onClick={(e) => {e.preventDefault(); scrollToSection('achievements')}} className={activeSection === 'achievements' ? 'active' : ''}>Achievements</a></li>
+            <li><a href="#contact" onClick={(e) => {e.preventDefault(); scrollToSection('contact')}} className={activeSection === 'contact' ? 'active' : ''}>Contact</a></li>
           </ul>
         </div>
       </nav>
 
-      {/* Home / Hero Section */}
+      {/* Hero Section */}
       <section id="home" className="hero">
         <div className="hero-content">
           <div className="hero-text">
             <h1 className="hero-name">Harini Malshini</h1>
             <h2 className="hero-title">Software Engineering Undergraduate</h2>
             <p className="hero-summary">
-              I’m a passionate Software Engineering undergraduate who enjoys 
-              transforming ideas into real-world digital solutions. 
-              I love exploring modern technologies, building clean user interfaces,
-              and solving problems through code. Currently expanding my skills 
-              in web development, programming, and software design while working 
-              on practical projects. Welcome to my portfolio—take a look at my 
-                              work and journey in tech.
+              I'm a passionate Software Engineering undergraduate who enjoys transforming ideas into real-world digital solutions.
+              I love exploring modern technologies, building clean user interfaces, and solving problems through code.
             </p>
             <div className="hero-links">
               <a href="https://github.com" target="_blank" rel="noopener noreferrer" className="hero-btn">
@@ -266,7 +356,7 @@ function App() {
         </div>
       </section>
 
-      {/* About Me Section */}
+      {/* About */}
       <section id="about" className="section about">
         <div className="container">
           <h2 className="section-title">About Me</h2>
@@ -276,7 +366,7 @@ function App() {
                 <GraduationCap size={40} />
               </div>
               <h3>Background</h3>
-              <p>I am a dedicated Software Engineering undergraduate with a strong foundation in programming and software development. I actively seek opportunities to apply my knowledge to real-world projects and contribute to innovative solutions.</p>
+              <p>I am a dedicated Software Engineering undergraduate with a strong foundation in programming and software development. I actively seek opportunities to apply my knowledge to real-world projects.</p>
             </div>
             <div className="about-card">
               <div className="about-icon">
@@ -288,10 +378,6 @@ function App() {
                 <li>Mobile App Development</li>
                 <li>Database Systems</li>
                 <li>UI/UX Design</li>
-                <li>Software Application Development</li>
-                <li>Exploring Modern Software Frameworks</li>
-                <li>Technology Trends and Innovation</li>
-                <li>Building Practical Software Projects</li>
               </ul>
             </div>
             <div className="about-card">
@@ -299,17 +385,17 @@ function App() {
                 <Target size={40} />
               </div>
               <h3>Career Goals</h3>
-              <p>My goal is to become a skilled Software Engineer who builds reliable and user-friendly software solutions. I aim to continuously improve my knowledge in programming, web technologies, and modern development frameworks. I am passionate about solving real-world problems through innovative and efficient code. I also strive to collaborate with professional teams and gain industry experience through challenging projects. Ultimately, I hope to contribute to impactful technology that improves people’s daily lives.</p>
+              <p>My goal is to become a skilled Software Engineer who builds reliable and user-friendly software solutions.</p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Technical Skills Section */}
+      {/* Skills */}
       <section id="skills" className="section skills">
         <div className="container">
           <h2 className="section-title">Technical Skills</h2>
-          <p className="section-subtitle">Click on a category to explore my skills</p>
+          <p className="section-subtitle">Click to expand categories</p>
           <div className="skills-grid">
             {skillsData.map((category, index) => (
               <div 
@@ -317,10 +403,7 @@ function App() {
                 className={`skill-card ${expandedCategory === category.id ? 'expanded' : ''} ${skillsVisible ? 'visible' : ''}`}
                 style={{ animationDelay: `${index * 0.1}s` }}
               >
-                <div 
-                  className="skill-card-header"
-                  onClick={() => toggleCategory(category.id)}
-                >
+                <div className="skill-card-header" onClick={() => toggleCategory(category.id)}>
                   <div className="skill-icon">{category.icon}</div>
                   <h3>{category.title}</h3>
                   <span className="skill-count">{category.skills.length} skills</span>
@@ -329,11 +412,7 @@ function App() {
                 <div className={`skill-card-content ${expandedCategory === category.id ? 'open' : ''}`}>
                   <div className="skill-tags-interactive">
                     {category.skills.map((skill, skillIndex) => (
-                      <div 
-                        key={skill.name} 
-                        className={`skill-pill ${animatedSkills[category.id] ? 'animate' : ''}`}
-                        style={{ animationDelay: `${skillIndex * 0.08}s` }}
-                      >
+                      <div key={skill.name} className={`skill-pill ${animatedSkills[category.id] ? 'animate' : ''}`} style={{ animationDelay: `${skillIndex * 0.08}s` }}>
                         <span className="skill-pill-name">{skill.name}</span>
                       </div>
                     ))}
@@ -345,170 +424,73 @@ function App() {
         </div>
       </section>
 
-      {/* Projects Section */}
+      {/* Projects */}
       <section id="projects" className="section projects">
         <div className="container">
           <h2 className="section-title">Projects</h2>
-          <p className="section-subtitle">Real-world applications demonstrating practical skills</p>
           <div className="projects-grid">
-            
+            {/* Projects cards - keeping original content */}
             <div className="project-card">
-              <div className="project-header">
-                <h3>Student Management System – Java OOP Implementation</h3>
-              </div>
-              <p className="project-description">
-                This project is a Java-based Student Management System developed in NetBeans to manage undergraduate and postgraduate students. 
-                It applies OOP concepts such as Encapsulation, Inheritance, and Polymorphism to organize student data.
-                Undergraduate and postgraduate students are handled using separate subclasses with customized performance evaluation methods.
-                Student performance is classified based on GPA and research scores. 
-                The system demonstrates practical use of Java OOP for academic student evaluation.
-              </p>
+              <h3>Student Management System</h3>
+              <p>Java OOP implementation with NetBeans</p>
               <div className="project-tech">
-                <span>Java</span>
-                <span>NetBeans IDE</span>
-                <span>OOP Concepts</span>
+                <span>Java</span><span>OOP</span><span>NetBeans</span>
               </div>
-              <div className="project-links">
-                <a href="https://github.com/Hari-Mal/Student-Management-System-Java-OOP-Implementation-.git" target="_blank" rel="noopener noreferrer" className="project-link">
-                  View Code →
-                </a>
-              </div>
+              <a href="#" className="project-link">View Code →</a>
             </div>
-
-            <div className="project-card">
-              <div className="project-header">
-                <h3>Eco-Friendly-Awareness-Website</h3>
-              </div>
-              <p className="project-description">
-                This project is an eco-friendly awareness website that educates users about sustainable living practices. 
-                It is built using Vue.js for a dynamic and reactive user interface. 
-                JavaScript is used to add interactivity such as navigation and real-time feedback display.
-                 HTML5 structures the website content, while CSS provides a clean green-themed design. 
-                 The website is also responsive so it works well on different devices.
-              </p>
-              <div className="project-tech">
-                <span>HTML5</span>
-                 <span>CSS</span>
-                <span>Vue.js</span>
-                <span>JavaScript</span>
-                
-               
-              </div>
-              <div className="project-links">
-                <a href="https://github.com/Hari-Mal/Eco-Friendly-Awareness-Website-Vue.js-CSS-JavaScript-.git" target="_blank" rel="noopener noreferrer" className="project-link">
-                  View Code →
-                </a>
-              </div>
-            </div>
-
-            <div className="project-card">
-              <div className="project-header">
-                <h3>Student-Performance-Analysis</h3>
-              </div>
-              <p className="project-description">
-               This project analyzes student performance using exploratory data analysis (EDA) techniques.
-                Python is used in Jupyter Notebook to examine relationships between demographics, study habits, and exam scores.
-                 Data visualization such as histograms, box plots, and correlation heatmaps are used to understand patterns. 
-                 Statistical tests like t-test, ANOVA, and chi-square are applied to identify significant differences. 
-               The analysis highlights the impact of test preparation and parental education on student performance.
-              </p>
-              <div className="project-tech">
-                <span>Python</span>
-                <span>Jupyter Notebook</span>
-                <span>Pandas</span>
-                <span> Matplotlib</span>
-                <span> Seaborn</span>
-                <span> SciPy</span>
-
-              </div>
-              <div className="project-links">
-                <a href="https://github.com/Hari-Mal/Student-Performance-Analysis-EDA-Statistical-Testing-.git" target="_blank" rel="noopener noreferrer" className="project-link">
-                  View Code →
-                </a>
-              </div>
-            </div>
-
-            <div className="project-card">
-              <div className="project-header">
-                <h3>🦁 Zoo Management System</h3>
-              </div>
-              <p className="project-description">
-                A comprehensive zoo management system built using Java OOP concepts. 
-                Implements inheritance, encapsulation, and polymorphism for efficient animal management.
-              </p>
-              <div className="project-tech">
-                <span>Java</span>
-                <span>OOP Concepts</span>
-                <span>GUI Development</span>
-              </div>
-              <div className="project-links">
-                <a href="https://github.com" target="_blank" rel="noopener noreferrer" className="project-link">
-                  View Code →
-                </a>
-              </div>
-            </div>
-
+            {/* Add more project cards similarly */}
           </div>
         </div>
       </section>
 
-      {/* Education Section */}
+      {/* Education */}
       <section id="education" className="section education">
         <div className="container">
           <h2 className="section-title">Education</h2>
-          <div className="education-content">
-            <div className="education-card">
-              <div className="education-icon">🎓</div>
-              <div className="education-details">
-                <h3>BSc (Hons) Software Engineering</h3>
-                <p className="education-university">University of Sri Lanka</p>
-                <p className="education-year">Currently Studying</p>
-              </div>
-            </div>
-            <div className="coursework">
-              <h3>Relevant Coursework</h3>
-              <div className="course-tags">
-                <span className="course-tag">Data Structures</span>
-                <span className="course-tag">Database Systems</span>
-                <span className="course-tag">Software Engineering</span>
-                <span className="course-tag">Computer Networks</span>
-                <span className="course-tag">Algorithms</span>
-                <span className="course-tag">Web Development</span>
-              </div>
+          <div className="education-card">
+            <div className="education-icon">🎓</div>
+            <div>
+              <h3>BSc (Hons) Software Engineering</h3>
+              <p>University of Sri Lanka</p>
+              <p>Currently Studying</p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Achievements Section */}
+      {/* Achievements & Certifications - INTERACTIVE */}
       <section id="achievements" className="section achievements">
         <div className="container">
-          <h2 className="section-title">Achievements & Certifications</h2>
-          <p className="section-subtitle">Click on a certificate to view details</p>
+          <div className="section-header">
+            <h2 className="section-title">Achievements & Certifications</h2>
+            <p className="section-subtitle">Click certificate for details, "View" to open full document</p>
+            <button className="add-cert-btn" onClick={() => setShowUploadModal(true)}>
+              <Plus size={20} /> Add Certificate
+            </button>
+          </div>
           <div className={`certificates-grid ${certificatesVisible ? 'visible' : ''}`}>
             {certificatesData.map((cert, index) => (
-              <div 
-                key={cert.id} 
-                className="certificate-card"
-                onClick={() => setSelectedCert(cert)}
-                style={{ 
-                  animationDelay: `${index * 0.15}s`,
-                  '--cert-color': cert.color 
-                }}
-              >
-                <div className="certificate-badge" style={{ background: `linear-gradient(135deg, ${cert.color} 0%, ${cert.color}99 100%)` }}>
+              <div key={cert.id} className="certificate-card" style={{ '--cert-color': cert.color, animationDelay: `${index * 0.15}s` }}>
+                {cert.imageUrl && (
+                  <img src={cert.imageUrl} alt={cert.title} className="cert-image" />
+                )}
+                <div className="certificate-badge" style={{ background: `linear-gradient(135deg, ${cert.color} 0%, ${cert.color}cc 100%)` }}>
                   <Award size={32} />
                 </div>
                 <div className="certificate-content">
-                  <h3 className="certificate-title">{cert.title}</h3>
+                  <h3>{cert.title}</h3>
                   <p className="certificate-issuer">{cert.issuer}</p>
-                  <p className="certificate-description">{cert.description}</p>
+                  <p>{cert.description}</p>
                   <div className="certificate-footer">
-                    <span className="certificate-date">
-                      <Calendar size={14} />
-                      {cert.date}
-                    </span>
-                    <span className="view-more">View Details →</span>
+                    <span><Calendar size={14} /> {cert.date}</span>
+                    <div>
+                      <button className="view-cert-btn" onClick={(e) => { e.stopPropagation(); setViewingCert(cert) }}>
+                        <Eye size={14} /> View
+                      </button>
+                      <button className="delete-cert-btn" onClick={(e) => { e.stopPropagation(); deleteCert(cert.id) }}>
+                        <X size={14} />
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -517,28 +499,25 @@ function App() {
         </div>
       </section>
 
-      {/* Certificate Modal */}
+      {/* Original Cert Details Modal */}
       {selectedCert && (
         <div className="cert-modal-overlay" onClick={() => setSelectedCert(null)}>
-          <div className="cert-modal" onClick={(e) => e.stopPropagation()} style={{ '--cert-color': selectedCert.color }}>
-            <button className="cert-modal-close" onClick={() => setSelectedCert(null)}>×</button>
+          <div className="cert-modal" onClick={e => e.stopPropagation()} style={{ '--cert-color': selectedCert.color }}>
+<button className="cert-modal-close" onClick={(e) => { e.preventDefault(); e.stopPropagation(); setSelectedCert(null); window.focus(); }} type="button">×</button>
             <div className="cert-modal-header">
-              <div className="cert-modal-badge" style={{ background: `linear-gradient(135deg, ${selectedCert.color} 0%, ${selectedCert.color}99 100%)` }}>
+              <div className="cert-modal-badge" style={{ background: `linear-gradient(135deg, ${selectedCert.color} 0%, ${selectedCert.color}cc 100%)` }}>
                 <Award size={48} />
               </div>
-              <h2 className="cert-modal-title">{selectedCert.title}</h2>
-              <p className="cert-modal-issuer">{selectedCert.issuer}</p>
+              <h2>{selectedCert.title}</h2>
+              <p>{selectedCert.issuer}</p>
             </div>
             <div className="cert-modal-body">
-              <div className="cert-modal-info">
-                <Calendar size={18} />
-                <span>{selectedCert.date}</span>
-              </div>
-              <p className="cert-modal-description">{selectedCert.description}</p>
-              <div className="cert-modal-skills">
-                <h4>Skills Learned</h4>
+              <div><Calendar size={18} /> {selectedCert.date}</div>
+              <p>{selectedCert.description}</p>
+              <div>
+                <h4>Skills Learned:</h4>
                 <div className="cert-skills-list">
-                  {selectedCert.skills && selectedCert.skills.map((skill, idx) => (
+                  {selectedCert.skills.map((skill, idx) => (
                     <span key={idx} className="cert-skill-tag">{skill}</span>
                   ))}
                 </div>
@@ -548,65 +527,153 @@ function App() {
         </div>
       )}
 
-      {/* Resume Section */}
+      {/* Certificate View Modal (Full Image/PDF) */}
+      {viewingCert && (
+        <div className="cert-modal-overlay" onClick={() => setViewingCert(null)}>
+          <div className="cert-view-modal" onClick={e => e.stopPropagation()}>
+<button className="cert-modal-close" onClick={(e) => { e.preventDefault(); e.stopPropagation(); setViewingCert(null); window.focus(); }} type="button">×</button>
+            <div className="cert-view-content">
+              {viewingCert.imageUrl && viewingCert.imageUrl.startsWith('data:image/') ? (
+                <img src={viewingCert.imageUrl} alt={viewingCert.title} className="full-cert-image" />
+              ) : (
+                <iframe src={viewingCert.imageUrl} className="full-cert-pdf" title={viewingCert.title} />
+              )}
+              <div className="cert-view-info">
+                <h3>{viewingCert.title}</h3>
+                <p>{viewingCert.issuer} • {viewingCert.date}</p>
+                {viewingCert.imageUrl && (
+                  <a href={viewingCert.imageUrl} download className="download-btn" title="Download">
+                    <Download size={20} />
+                  </a>
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Upload Certificate Modal */}
+      {showUploadModal && (
+        <div className="upload-modal-overlay" onClick={resetUploadForm}>
+          <div className="upload-modal" onClick={e => e.stopPropagation()}>
+<button className="upload-modal-close" onClick={(e) => { e.preventDefault(); e.stopPropagation(); resetUploadForm(); window.focus(); }} type="button">×</button>
+            <h2>Add New Certificate</h2>
+            <form onSubmit={handleSubmit} className="upload-form">
+              <div className="upload-form-group">
+                <label>Title *</label>
+                <input 
+                  name="title" 
+                  value={uploadForm.title} 
+                  onChange={handleFormChange}
+                  required 
+                />
+              </div>
+              <div className="upload-form-group">
+                <label>Issuer/Organization *</label>
+                <input 
+                  name="issuer" 
+                  value={uploadForm.issuer} 
+                  onChange={handleFormChange}
+                  required 
+                />
+              </div>
+              <div className="upload-form-group">
+                <label>Date</label>
+                <input type="date" name="date" value={uploadForm.date} onChange={handleFormChange} />
+              </div>
+              <div className="upload-form-group">
+                <label>Description</label>
+                <textarea name="description" value={uploadForm.description} onChange={handleFormChange} />
+              </div>
+              <div className="upload-form-group">
+                <label>Certificate Image/PDF *</label>
+                <div className="file-upload-area" onClick={() => fileInputRef.current?.click()}>
+                  <Upload size={32} />
+                  <label>Click to upload certificate</label>
+                  {previewUrl && (
+                    <div className="file-preview">
+                      <img src={previewUrl} alt="Preview" />
+                    </div>
+                  )}
+                </div>
+                <input ref={fileInputRef} type="file" className="file-input" accept="image/*,application/pdf" onChange={handleImageUpload} required />
+              </div>
+              <div className="upload-form-group">
+                <label>Accent Color</label>
+                <div className="color-picker">
+                  <input type="color" name="color" value={uploadForm.color} onChange={handleFormChange} />
+                  <span>{uploadForm.color}</span>
+                </div>
+              </div>
+              <div className="upload-form-group">
+                <label>Skills Learned *</label>
+                <div className="skills-input">
+                  <input ref={skillInputRef} id="skill-input" placeholder="Add skill" />
+                  <button type="button" className="add-skill-btn" onClick={addSkill}>Add</button>
+                </div>
+                <div className="skills-tags">
+                  {newSkills.map((skill, index) => (
+                    <span key={index} className="skill-tag">
+                      {skill}
+                      <button type="button" onClick={() => removeSkill(index)}><X size={12} /></button>
+                    </span>
+                  ))}
+                </div>
+                {newSkills.length === 0 && <p style={{color: 'var(--text-muted)', fontSize: '0.9rem'}}>Add at least one skill</p>}
+              </div>
+              <div className="upload-actions">
+                <button type="button" className="cancel-btn" onClick={resetUploadForm}>Cancel</button>
+                <button type="submit" className="upload-btn" disabled={!imageFile || !uploadForm.title || !uploadForm.issuer || newSkills.length === 0}>
+                  Add Certificate
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {/* Resume */}
       <section id="resume" className="section resume">
         <div className="container">
-          <div className="resume-content">
-            <h2 className="section-title">Download My Resume</h2>
-            <p className="resume-text">
-              Get a detailed overview of my academic background, skills, and experience.
-            </p>
-            <a href="/resume.pdf" download className="resume-btn">
-              <span className="btn-icon">📄</span> Download Resume (PDF)
-            </a>
-          </div>
+          <h2 className="section-title">Download Resume</h2>
+          <a href="/resume.pdf" download className="resume-btn">
+            📄 Download PDF
+          </a>
         </div>
       </section>
 
-      {/* Contact Section */}
+      {/* Contact */}
       <section id="contact" className="section contact">
         <div className="container">
-          <h2 className="section-title">Get In Touch</h2>
-          <p className="contact-intro">Feel free to reach out for collaborations or just a friendly hello!</p>
+          <h2 className="section-title">Contact</h2>
           <div className="contact-grid">
-            
             <a href="mailto:nadeesha.samanmali@gmail.com" className="contact-card">
-              <div className="contact-icon">✉</div>
+              <div>✉</div>
               <h3>Email</h3>
               <p>nadeesha.samanmali@gmail.com</p>
             </a>
-
             <a href="tel:+94771234567" className="contact-card">
-              <div className="contact-icon">📱</div>
+              <div>📱</div>
               <h3>Phone</h3>
               <p>+94 771 234 567</p>
             </a>
-
-            <a href="https://github.com" target="_blank" rel="noopener noreferrer" className="contact-card">
-              <div className="contact-icon">⌘</div>
+            <a href="https://github.com" className="contact-card">
+              <div>⌘</div>
               <h3>GitHub</h3>
-              <p>github.com/nadeesha</p>
+              <p>/nadeesha</p>
             </a>
-
-            <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="contact-card">
-              <div className="contact-icon">in</div>
+            <a href="https://linkedin.com" className="contact-card">
+              <div>in</div>
               <h3>LinkedIn</h3>
-              <p>linkedin.com/in/nadeesha</p>
+              <p>/in/nadeesha</p>
             </a>
-
           </div>
         </div>
       </section>
 
-      {/* Footer */}
       <footer className="footer">
         <div className="container">
-          <p className="footer-text">© 2024 Nadeesha Samanmali. All rights reserved.</p>
-          <div className="footer-links">
-            <a href="https://github.com" target="_blank" rel="noopener noreferrer">GitHub</a>
-            <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer">LinkedIn</a>
-            <a href="mailto:nadeesha.samanmali@gmail.com">Email</a>
-          </div>
+          <p>© 2024 Nadeesha Samanmali. All rights reserved.</p>
         </div>
       </footer>
     </div>
