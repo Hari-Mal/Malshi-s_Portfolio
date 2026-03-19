@@ -6,6 +6,16 @@ import introJavaImage from './assets/Introduction to java.png'
 import introPythonImage from './assets/Introduction to python.png'
 import introSQLImage from './assets/Introduction to SQL.png'
 import pythonIntermediateImage from './assets/Python intermidiate.png'
+import javaIntermediateImage from './assets/Java intermidiate.png'
+import inventorymanagement from './assets/Inventory Management_page-0001.jpg'
+import effectiveleadership from './assets/Effective Leadership_page-0001.jpg'
+import socialmediamarketing from './assets/Social Media Marketing_page-0001.jpg'
+import yourtargetaudience from './assets/Your Target Audience_page-0001.jpg'
+import apitestautomation from './assets/API test automation.png'
+import codelesstestautomation from './assets/codeless test automation.png'
+import settingafoundation from './assets/setting a foundation.png'
+import thewholeteam from './assets/the whole team.png'
+import webelementlocators from './assets/web element locator.png'
 import { GraduationCap, Sparkles, Target, Code, Globe, Smartphone, Database, Wrench, ChevronDown, Award, Calendar, ExternalLink, Plus, Upload, Image as ImageIcon, X, Palette, Download, Eye } from 'lucide-react'
 
 function App() {
@@ -36,7 +46,7 @@ function App() {
       title: 'Introduction to C',
       issuer: 'Sololearn',
       date: '2024-02-20',
-      color: '#ff6b6b',
+      color: '#4dddd6',
       imageUrl: introCImage,
     },
     {
@@ -44,7 +54,7 @@ function App() {
       title: 'Introduction to Java',
       issuer: 'Sololearn',
       date: '2024-10-24',
-      color: '#4ecdc4',
+      color: '#4dddd6',
       imageUrl: introJavaImage,
     },
     {
@@ -52,7 +62,7 @@ function App() {
       title: 'Introduction to Python',
       issuer: 'Sololearn',
       date: '2024-03-21',
-      color: '#45b7d1',
+      color: '#4dddd6',
       imageUrl: introPythonImage,
     },
     {
@@ -60,7 +70,7 @@ function App() {
       title: 'Introduction to SQL',
       issuer: 'Sololearn',
       date: '2024-04-24',
-      color: '#f9ca24',
+      color: '#4dddd6',
       imageUrl: introSQLImage,
     },
     {
@@ -68,8 +78,94 @@ function App() {
       title: 'Python Intermediate',
       issuer: 'Sololearn',
       date: '2024-05-10',
-      color: '#6c5ce7',
-      imageUrl: pythonIntermediateImage,   }
+      color: '#4dddd6',
+      imageUrl: pythonIntermediateImage,   
+    },
+    {
+      id: 'java-intermediate',
+      title: 'Java Intermediate',
+      issuer: 'Sololearn',
+      date: '2024-11-25',
+      color: '#4dddd6',
+      imageUrl: javaIntermediateImage,  
+     },
+      {
+      id: 'inventory-management',
+      title: 'Inventory Management',
+      issuer: 'HP LIFE online course',
+      date: '2024-04-02',
+      color: '#3257c5',
+      imageUrl: inventorymanagement,  
+      },
+      {
+      id: 'effective-leadership',
+      title: 'Effective Leadership',
+      issuer: 'HP LIFE online course',
+      date: '2024-03-20',
+      color: '#3257c5',
+      imageUrl: effectiveleadership,  
+      },
+      {
+      id: 'social-media-marketing',
+      title: 'Social Media Marketing',
+      issuer: 'HP LIFE online course',
+      date: '2024-04-02',
+      color: '#3257c5',
+      imageUrl: socialmediamarketing,  
+      },
+      {
+      id: 'your-target-audience',
+      title: 'Your Target Audience',
+      issuer: 'HP LIFE online course',
+      date: '2024-04-02',
+      color: '#3257c5',
+      imageUrl: yourtargetaudience,
+      },
+      {
+      id: 'api-test-automation',
+      title: 'API Test Automation with Postman',
+      issuer: 'Applitools',
+      date: '05-02-2025',
+      color: '#6c42ac',
+      imageUrl: apitestautomation,
+      },
+      {
+      id: 'code-less-test-automation',
+      title: 'Codeless Test Automation With Selenium IDE',
+      issuer: 'Applitools',
+      date: '05-03-2025',
+      color: '#6c42ac',
+      imageUrl: codelesstestautomation,
+      },
+      {
+      id: 'setting-a-foundation',
+      title: 'Setting a Foundation For Successful Test Automation ',
+      issuer: 'Applitools',
+      date: '05-02-2025',
+      color: '#6c42ac',
+      imageUrl: settingafoundation,
+      },
+      {
+      id: 'the-whole-team',
+      title: 'The Whole Team Approach to Continue Testing',
+      issuer: 'Applitools',
+      date: '05-02-2025',
+      color: '#6c42ac',
+      imageUrl: thewholeteam,
+      },
+      {
+      id: 'web-element-locators',
+      title: 'Web Element Locators Strategies',
+      issuer: 'Applitools',
+      date: '05-03-2025',
+      color: '#6c42ac',
+      imageUrl: webelementlocators,
+        }
+
+  
+
+     
+
   ])
 
   const [projectsData] = useState([
