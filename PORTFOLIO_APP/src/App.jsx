@@ -16,6 +16,7 @@ import codelesstestautomation from './assets/codeless test automation.png'
 import settingafoundation from './assets/setting a foundation.png'
 import thewholeteam from './assets/the whole team.png'
 import webelementlocators from './assets/web element locator.png'
+import webdesignforbeginners from './assets/Web_Design_for_Beginners_E-Certificate.pdf2_page-0001.jpg'
 import { GraduationCap, Sparkles, Target, Code, Globe, Smartphone, Database, Wrench, ChevronDown, Award, Calendar, ExternalLink, Plus, Upload, Image as ImageIcon, X, Palette, Download, Eye } from 'lucide-react'
 
 function App() {
@@ -160,7 +161,15 @@ function App() {
       date: '05-03-2025',
       color: '#6c42ac',
       imageUrl: webelementlocators,
-        }
+      },
+      {
+      id: 'web-design-for-beginners',
+      title: 'Web Design for Beginners',
+      issuer: 'Center for open and distance learning (CODL) University of Moratuwa Sri Lanka',
+      date: '2024',
+      color: '#822a86',
+      imageUrl: webdesignforbeginners,
+      }
 
   
 
@@ -171,10 +180,10 @@ function App() {
   const [projectsData] = useState([
     {
       id: 1,
-      title: "Student Management System",
-      githubUrl: "https://github.com/harinimalshini/student-management-java",
-      techStack: ["Java", "OOP", "NetBeans", "Swing"],
-      description: "Complete student management system with CRUD operations, user authentication, and reporting features. Implements OOP principles with clean architecture and GUI interface."
+      title: "Eco-Friendly-Awareness-Website",
+      githubUrl: "https://github.com/Hari-Mal/Eco-Friendly-Awareness-Website-Vue.js-CSS-JavaScript-.git",
+      techStack: ["Vue.js", "JavaScript", "HTML5"," CSS"],
+      description: "This project is an eco-friendly awareness website that educates users about sustainable living practices. It is built using Vue.js for a dynamic and reactive user interface. JavaScript is used to add interactivity such as navigation and real-time feedback display. HTML5 structures the website content, while CSS provides a clean green-themed design. The website is also responsive so it works well on different devices."
     },
     {
       id: 2,
