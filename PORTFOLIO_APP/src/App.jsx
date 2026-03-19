@@ -1,6 +1,11 @@
 import { useState, useEffect, useRef, useCallback } from 'react'
 import './App.css'
 import profileImage from './assets/profile.jpg'
+import introCImage from './assets/Introduction to C.png'
+import introJavaImage from './assets/Introduction to java.png'
+import introPythonImage from './assets/Introduction to python.png'
+import introSQLImage from './assets/Introduction to SQL.png'
+import pythonIntermediateImage from './assets/Python intermidiate.png'
 import { GraduationCap, Sparkles, Target, Code, Globe, Smartphone, Database, Wrench, ChevronDown, Award, Calendar, ExternalLink, Plus, Upload, Image as ImageIcon, X, Palette, Download, Eye } from 'lucide-react'
 
 function App() {
@@ -26,7 +31,45 @@ function App() {
   const skillInputRef = useRef(null)
 
   const [certificatesData, setCertificatesData] = useState([
-    
+    {
+      id: 'c-intro',
+      title: 'Introduction to C',
+      issuer: 'Sololearn',
+      date: '2024-02-20',
+      color: '#ff6b6b',
+      imageUrl: introCImage,
+    },
+    {
+      id: 'java-intro',
+      title: 'Introduction to Java',
+      issuer: 'Sololearn',
+      date: '2024-10-24',
+      color: '#4ecdc4',
+      imageUrl: introJavaImage,
+    },
+    {
+      id: 'python-intro',
+      title: 'Introduction to Python',
+      issuer: 'Sololearn',
+      date: '2024-03-21',
+      color: '#45b7d1',
+      imageUrl: introPythonImage,
+    },
+    {
+      id: 'sql-intro',
+      title: 'Introduction to SQL',
+      issuer: 'Sololearn',
+      date: '2024-04-24',
+      color: '#f9ca24',
+      imageUrl: introSQLImage,
+    },
+    {
+      id: 'python-intermediate',
+      title: 'Python Intermediate',
+      issuer: 'Sololearn',
+      date: '2024-05-10',
+      color: '#6c5ce7',
+      imageUrl: pythonIntermediateImage,   }
   ])
 
   const [projectsData] = useState([
@@ -70,17 +113,39 @@ function App() {
 
   const STORAGE_KEY = 'portfolio_certificates'
 
-  // Load from localStorage
+  // Load from localStorage with sample data if empty
   useEffect(() => {
     const saved = localStorage.getItem(STORAGE_KEY)
+    console.log('Loading certificates from localStorage:', saved ? 'Found data' : 'No data - adding sample')
     if (saved) {
-      const parsed = JSON.parse(saved)
-      setCertificatesData(parsed)
+      try {
+        const parsed = JSON.parse(saved)
+        setCertificatesData(parsed)
+      } catch (e) {
+        console.error('localStorage parse error:', e)
+        localStorage.removeItem(STORAGE_KEY)
+      }
+    } else {
+      // Add sample certificate for testing persistence
+      const sampleCert = {
+        id: 'sample-1',
+        title: 'Sample Certificate - Persistence Test',
+        issuer: 'Portfolio App',
+        date: '2024-10-01',
+        description: 'This sample shows certificates persist across refreshes!',
+        color: '#00d4ff',
+        skills: ['React', 'localStorage', 'Persistence'],
+        imageUrl: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjEwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjMDBkNGZmIi8+PHRleHQgeD0iNTAlIiB5PSI1NSUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxOCIgZmlsbD0id2hpdGUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj5DZXJ0aWZpY2F0ZTwvdGV4dD48L3N2Zz4='
+      }
+      setCertificatesData([sampleCert])
+      localStorage.setItem(STORAGE_KEY, JSON.stringify([sampleCert]))
+      console.log('Added sample certificate')
     }
   }, [])
 
   // Save to localStorage
   useEffect(() => {
+    console.log('Saving certificates to localStorage:', certificatesData.length, 'items')
     localStorage.setItem(STORAGE_KEY, JSON.stringify(certificatesData))
   }, [certificatesData])
 
@@ -439,6 +504,13 @@ function App() {
             <p className="section-subtitle">Click certificate for details, "View" to open full document</p>
             <button className="add-cert-btn" onClick={() => setShowUploadModal(true)}>
               <Plus size={20} /> Add Certificate
+            </button>
+            <button className="save-cert-btn" onClick={() => {
+              localStorage.setItem(STORAGE_KEY, JSON.stringify(certificatesData))
+              console.log('Force saved', certificatesData.length, 'certificates')
+              alert('Certificates force-saved to localStorage! Refresh to test.')
+            }}>
+              💾 Force Save & Test
             </button>
           </div>
           <div className={`certificates-grid ${certificatesVisible ? 'visible' : ''}`}>
