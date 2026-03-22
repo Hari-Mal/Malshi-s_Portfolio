@@ -1044,25 +1044,25 @@ function App() {
         <div className="container">
           <h2 className="section-title">Contact</h2>
           <div className="contact-grid">
-            <a href="mailto:nadeesha.samanmali@gmail.com" className="contact-card">
+            <a href="mailto:harinimalshini@gmail.com" className="contact-card">
               <div>✉</div>
               <h3>Email</h3>
-              <p>nadeesha.samanmali@gmail.com</p>
+              <p>harinimalshini@gmail.com</p>
             </a>
-            <a href="tel:+94771234567" className="contact-card">
+            <a href="tel:+9410663584" className="contact-card">
               <div>📱</div>
               <h3>Phone</h3>
-              <p>+94 771 234 567</p>
+              <p>+94 71 066 3584</p>
             </a>
-            <a href="https://github.com" className="contact-card">
+            <a href="https://github.com/Hari-Mal" className="contact-card">
               <div>⌘</div>
               <h3>GitHub</h3>
-              <p>/nadeesha</p>
+              <p>Harini</p>
             </a>
-            <a href="https://linkedin.com" className="contact-card">
+            <a href="https://www.linkedin.com/in/harini-malshini-23a175385/" className="contact-card">
               <div>in</div>
               <h3>LinkedIn</h3>
-              <p>/in/nadeesha</p>
+              <p>Harini</p>
             </a>
           </div>
         </div>
@@ -1070,7 +1070,7 @@ function App() {
 
       <footer className="footer">
         <div className="container">
-          <p>© 2024 Nadeesha Samanmali. All rights reserved.</p>
+          
         </div>
       </footer>
     </div>
