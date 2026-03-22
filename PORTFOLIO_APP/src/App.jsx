@@ -334,8 +334,8 @@ function App() {
         { name: 'Java', level: 85 },
         { name: 'Python', level: 80 },
         { name: 'JavaScript', level: 90 },
-        { name: 'C', level: 75 },
-        { name: 'C++', level: 70 }
+        { name: 'C', level: 75 }
+    
       ]
     },
     {
@@ -345,20 +345,11 @@ function App() {
       skills: [
         { name: 'HTML', level: 95 },
         { name: 'CSS', level: 90 },
-        { name: 'React', level: 85 },
-        { name: 'PHP', level: 75 },
-        { name: 'CodeIgniter', level: 70 }
+        { name: 'React', level: 85 }
+       
       ]
     },
-    {
-      id: 'mobile',
-      title: 'Mobile Development',
-      icon: <Smartphone size={24} />,
-      skills: [
-        { name: 'React Native', level: 80 },
-        { name: 'Android Development', level: 75 }
-      ]
-    },
+    
     {
       id: 'database',
       title: 'Database',
@@ -376,7 +367,6 @@ function App() {
         { name: 'Git', level: 90 },
         { name: 'GitHub', level: 85 },
         { name: 'VS Code', level: 95 },
-        { name: 'Cisco Packet Tracer', level: 75 },
         { name: 'Figma', level: 80 }
       ]
     }
