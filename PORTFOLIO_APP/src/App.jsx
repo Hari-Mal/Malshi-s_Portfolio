@@ -17,7 +17,7 @@ import settingafoundation from './assets/setting a foundation.png'
 import thewholeteam from './assets/the whole team.png'
 import webelementlocators from './assets/web element locator.png'
 import webdesignforbeginners from './assets/Web_Design_for_Beginners_E-Certificate.pdf2_page-0001.jpg'
-import { GraduationCap, Sparkles, Target, Code, Globe, Smartphone, Database, Wrench, ChevronDown, Award, Calendar, ExternalLink, Plus, Upload, Image as ImageIcon, X, Palette, Download, Eye } from 'lucide-react'
+import { GraduationCap, Sparkles, Target, Code, Globe, Smartphone, Database, Wrench, ChevronDown, Award, Calendar, ExternalLink, Plus, Upload, Image as ImageIcon, X, Palette, Download, Eye, FileText } from 'lucide-react'
 
 function App() {
   const [activeSection, setActiveSection] = useState('home')
@@ -40,6 +40,12 @@ function App() {
   const [imageFile, setImageFile] = useState(null)
   const fileInputRef = useRef(null)
   const skillInputRef = useRef(null)
+  const resumeFileInputRef = useRef(null)
+
+  const [resumeData, setResumeData] = useState(null)
+  const [showResumeUploadModal, setShowResumeUploadModal] = useState(false)
+  const [resumePreviewUrl, setResumePreviewUrl] = useState('')
+  const [resumeFile, setResumeFile] = useState(null)
 
   const [certificatesData, setCertificatesData] = useState([
     {
@@ -237,11 +243,55 @@ function App() {
   ])
 
 
-  const STORAGE_KEY = 'portfolio_certificates'
+  const CERT_STORAGE_KEY = 'portfolio_certificates'
+  const RESUME_STORAGE_KEY = 'portfolio_resume'
 
-  // Load from localStorage with sample data if empty
+  // Load resume from localStorage
   useEffect(() => {
-    const saved = localStorage.getItem(STORAGE_KEY)
+    const savedResume = localStorage.getItem(RESUME_STORAGE_KEY)
+    if (savedResume) {
+      try {
+        const parsedResume = JSON.parse(savedResume)
+        setResumeData(parsedResume)
+      } catch (e) {
+        console.error('Resume localStorage parse error:', e)
+        localStorage.removeItem(RESUME_STORAGE_KEY)
+      }
+    }
+  }, [])
+
+  // Save resume to localStorage
+  useEffect(() => {
+    if (resumeData) {
+      localStorage.setItem(RESUME_STORAGE_KEY, JSON.stringify(resumeData))
+    }
+  }, [resumeData])
+
+  // Load resume from localStorage
+  useEffect(() => {
+    const saved = localStorage.getItem(RESUME_STORAGE_KEY)
+    if (saved) {
+      try {
+        const parsed = JSON.parse(saved)
+        setResumeData(parsed)
+        setResumePreviewUrl(parsed.dataURL)
+      } catch (e) {
+        console.error('Resume localStorage parse error:', e)
+        localStorage.removeItem(RESUME_STORAGE_KEY)
+      }
+    }
+  }, [])
+
+  // Save resume to localStorage
+  useEffect(() => {
+    if (resumeData) {
+      localStorage.setItem(RESUME_STORAGE_KEY, JSON.stringify(resumeData))
+    }
+  }, [resumeData])
+
+  // Load certificates from localStorage (use CERT_STORAGE_KEY)
+  useEffect(() => {
+    const saved = localStorage.getItem(CERT_STORAGE_KEY)
     console.log('Loading certificates from localStorage:', saved ? 'Found data' : 'No data - adding sample')
     if (saved) {
       try {
@@ -249,7 +299,7 @@ function App() {
         setCertificatesData(parsed)
       } catch (e) {
         console.error('localStorage parse error:', e)
-        localStorage.removeItem(STORAGE_KEY)
+        localStorage.removeItem(CERT_STORAGE_KEY)
       }
     } else {
       // Add sample certificate for testing persistence
@@ -264,15 +314,15 @@ function App() {
         imageUrl: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjEwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjMDBkNGZmIi8+PHRleHQgeD0iNTAlIiB5PSI1NSUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxOCIgZmlsbD0id2hpdGUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj5DZXJ0aWZpY2F0ZTwvdGV4dD48L3N2Zz4='
       }
       setCertificatesData([sampleCert])
-      localStorage.setItem(STORAGE_KEY, JSON.stringify([sampleCert]))
+      localStorage.setItem(CERT_STORAGE_KEY, JSON.stringify([sampleCert]))
       console.log('Added sample certificate')
     }
   }, [])
 
-  // Save to localStorage
+  // Save certificates to localStorage (use CERT_STORAGE_KEY)
   useEffect(() => {
     console.log('Saving certificates to localStorage:', certificatesData.length, 'items')
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(certificatesData))
+    localStorage.setItem(CERT_STORAGE_KEY, JSON.stringify(certificatesData))
   }, [certificatesData])
 
   const skillsData = [
@@ -384,6 +434,53 @@ function App() {
     }
   }
 
+  // Resume upload handlers
+  const handleResumeUpload = (e) => {
+    const file = e.target.files[0]
+    if (file && file.type === 'application/pdf') {
+      if (file.size > 10 * 1024 * 1024) { // 10MB limit
+        alert('PDF file too large. Max 10MB.')
+        return
+      }
+      setResumeFile(file)
+      const reader = new FileReader()
+      reader.onloadend = () => setResumePreviewUrl(reader.result)
+      reader.readAsDataURL(file)
+    } else {
+      alert('Please select a PDF file.')
+    }
+  }
+
+  const resetResumeForm = () => {
+    setShowResumeUploadModal(false)
+    setResumePreviewUrl('')
+    setResumeFile(null)
+    if (resumeFileInputRef.current) resumeFileInputRef.current.value = ''
+  }
+
+  const handleResumeSubmit = (e) => {
+    e.preventDefault()
+    if (!resumeFile) {
+      alert('Please select a PDF file.')
+      return
+    }
+    const newResumeData = {
+      dataURL: resumePreviewUrl,
+      name: resumeFile.name,
+      uploadDate: new Date().toISOString().split('T')[0]
+    }
+    setResumeData(newResumeData)
+    setShowResumeUploadModal(false)
+    resetResumeForm()
+  }
+
+  const deleteResume = () => {
+    if (confirm('Delete uploaded resume?')) {
+      setResumeData(null)
+      localStorage.removeItem(RESUME_STORAGE_KEY)
+    }
+  }
+
   // Upload handlers
   const handleImageUpload = (e) => {
     const file = e.target.files[0]
@@ -466,7 +563,9 @@ function App() {
             <li><a href="#projects" onClick={(e) => {e.preventDefault(); scrollToSection('projects')}} className={activeSection === 'projects' ? 'active' : ''}>Projects</a></li>
             <li><a href="#education" onClick={(e) => {e.preventDefault(); scrollToSection('education')}} className={activeSection === 'education' ? 'active' : ''}>Education</a></li>
             <li><a href="#achievements" onClick={(e) => {e.preventDefault(); scrollToSection('achievements')}} className={activeSection === 'achievements' ? 'active' : ''}>Achievements</a></li>
+            <li><a href="#resume" onClick={(e) => {e.preventDefault(); scrollToSection('resume')}} className={activeSection === 'resume' ? 'active' : ''}>Resume</a></li>
             <li><a href="#contact" onClick={(e) => {e.preventDefault(); scrollToSection('contact')}} className={activeSection === 'contact' ? 'active' : ''}>Contact</a></li>
+
           </ul>
         </div>
       </nav>
@@ -724,6 +823,86 @@ function App() {
         </div>
       )}
 
+      {/* Resume Upload Modal */}
+      {showResumeUploadModal && (
+        <div className="upload-modal-overlay" onClick={() => setShowResumeUploadModal(false)}>
+          <div className="upload-modal" onClick={e => e.stopPropagation()}>
+            <button 
+              className="upload-modal-close" 
+              onClick={(e) => { 
+                e.preventDefault(); 
+                e.stopPropagation(); 
+                setShowResumeUploadModal(false); 
+                window.focus(); 
+              }} 
+              type="button"
+            >
+              ×
+            </button>
+            <h2>Upload Resume</h2>
+            <form onSubmit={(e) => {
+              e.preventDefault()
+              if (!resumeFile || resumeFile.type !== 'application/pdf') {
+                alert('Please select a valid PDF file.')
+                return
+              }
+              if (resumeFile.size > 10 * 1024 * 1024) {
+                alert('File size must be under 10MB.')
+                return
+              }
+              const reader = new FileReader()
+              reader.onloadend = () => {
+                const resume = {
+                  dataURL: reader.result,
+                  name: resumeFile.name,
+                  uploadDate: new Date().toISOString()
+                }
+                setResumeData(resume)
+                setResumePreviewUrl(reader.result)
+                setShowResumeUploadModal(false)
+                setResumeFile(null)
+              }
+              reader.readAsDataURL(resumeFile)
+            }} className="upload-form">
+              <div className="upload-form-group">
+                <label>Resume PDF *</label>
+                <div className="file-upload-area" onClick={() => resumeFileInputRef.current?.click()}>
+                  <Upload size={32} />
+                  <label>Click to upload PDF resume</label>
+                  {resumePreviewUrl && (
+                    <div className="file-preview">
+                      <iframe src={resumePreviewUrl} style={{width: '200px', height: '250px'}} />
+                    </div>
+                  )}
+                </div>
+                <input 
+                  ref={resumeFileInputRef} 
+                  type="file" 
+                  className="file-input" 
+                  accept="application/pdf" 
+                  onChange={(e) => {
+                    const file = e.target.files[0]
+                    if (file && file.type === 'application/pdf') {
+                      setResumeFile(file)
+                      const reader = new FileReader()
+                      reader.onloadend = () => setResumePreviewUrl(reader.result)
+                      reader.readAsDataURL(file)
+                    }
+                  }} 
+                  required 
+                />
+              </div>
+              <div className="upload-actions">
+                <button type="button" className="cancel-btn" onClick={() => setShowResumeUploadModal(false)}>Cancel</button>
+                <button type="submit" className="upload-btn" disabled={!resumeFile}>
+                  Upload Resume
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
       {/* Upload Certificate Modal */}
       {showUploadModal && (
         <div className="upload-modal-overlay" onClick={resetUploadForm}>
@@ -804,13 +983,59 @@ function App() {
         </div>
       )}
 
-      {/* Resume */}
+      {/* Resume - Enhanced with Upload & Viewer */}
       <section id="resume" className="section resume">
         <div className="container">
-          <h2 className="section-title">Download Resume</h2>
-          <a href="/resume.pdf" download className="resume-btn">
-            📄 Download PDF
-          </a>
+          <div className="section-header">
+            <h2 className="section-title">Resume</h2>
+            {resumeData ? (
+              <button className="add-cert-btn" style={{ fontSize: '0.9rem', padding: '0.6rem 1.2rem' }} onClick={() => setShowResumeUploadModal(true)}>
+                <Upload size={16} /> Update Resume
+              </button>
+            ) : (
+              <button className="add-cert-btn" style={{ fontSize: '0.9rem', padding: '0.6rem 1.2rem' }} onClick={() => setShowResumeUploadModal(true)}>
+                <Plus size={16} /> Upload Resume
+              </button>
+            )}
+          </div>
+          
+          {resumeData ? (
+            <div className="resume-card">
+              <div className="resume-preview">
+                {resumePreviewUrl && (
+                  <iframe 
+                    src={resumePreviewUrl} 
+                    className="resume-viewer" 
+                    title="Resume Preview"
+                  />
+                )}
+              </div>
+              <div className="resume-actions">
+                <a href={resumeData.dataURL} download={resumeData.name} className="resume-download-btn">
+                  <Download size={20} /> Download Resume
+                </a>
+                <button className="resume-delete-btn" onClick={() => {
+                  if (confirm('Delete uploaded resume?')) {
+                    setResumeData(null)
+                    localStorage.removeItem(RESUME_STORAGE_KEY)
+                  }
+                }}>
+                  <X size={20} /> Delete
+                </button>
+              </div>
+              <p className="resume-info">
+                Uploaded: {new Date(resumeData.uploadDate).toLocaleDateString()} • {resumeData.name}
+              </p>
+            </div>
+          ) : (
+            <div className="resume-placeholder">
+              <FileText size={64} className="resume-placeholder-icon" />
+              <p>No resume uploaded yet. Upload your PDF resume to make it visible to visitors!</p>
+              <button className="resume-upload-btn" onClick={() => setShowResumeUploadModal(true)}>
+                📤 Upload PDF Resume
+              </button>
+            </div>
+          )}
         </div>
       </section>
 
@@ -851,6 +1076,7 @@ function App() {
     </div>
   )
 }
+
 
 export default App
 

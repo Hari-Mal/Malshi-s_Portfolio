@@ -1,29 +1,32 @@
-# Portfolio Development TODO
+# Resume PDF Upload Feature - Implementation Plan
 
-## Task: Create Complete Software Engineering Student Portfolio
+Current Progress: Plan approved ✅
 
-### Progress Tracking:
+## Breakdown of Steps (to be checked off):
 
-- [x] Create complete App.jsx with all 9 portfolio sections
-- [x] Create complete App.css with dark theme styling
-- [x] Test the development server ✅ Running on http://localhost:5175/
+### 1. Create TODO.md [IN PROGRESS]
+- [x] Generate detailed TODO with all steps
 
-### Sections Implemented:
-1. [x] Navigation - Fixed navbar with smooth scroll
-2. [x] Hero/Home - Full name, title, summary, social links
-3. [x] About Me - Background, university, interests, goals
-4. [x] Technical Skills - Categorized skills (Programming, Web, Mobile, Database, Tools)
-5. [x] Projects - 4 projects with descriptions and technologies
-6. [x] Education - Degree, university, coursework
-7. [x] Achievements/Certifications - Workshops, hackathons, courses
-8. [x] Resume/CV - Download button
-9. [x] Contact - Email, phone, GitHub, LinkedIn
-10. [x] Footer - Copyright
+### 2. Update App.jsx
+- [ ] Add resume state variables (resumeData, showResumeUploadModal, etc.)
+- [ ] Add localStorage load/save logic (RESUME_STORAGE_KEY)
+- [ ] Add PDF upload handler + validation
+- [ ] Add resume upload modal JSX
+- [ ] Update #resume section: conditional viewer/upload
+- [ ] Add resume view modal (iframe viewer + download)
+- [ ] Add nav scroll to #resume (already exists)
 
-### Design Requirements:
-- [x] Dark theme (#0a0a0a background)
-- [x] Cyan accent color (#00d4ff)
-- [x] Smooth scroll navigation
-- [x] Hover animations
-- [x] Responsive design
+### 3. Update App.css
+- [ ] Add .resume-* classes for upload modal/viewer
+- [ ] Style consistent with certificates
+- [ ] Responsive iframe + buttons
+
+### 4. Testing & Completion
+- [ ] Test upload → persistence → view/download
+- [ ] Test delete/re-upload
+- [ ] Test mobile responsiveness
+- [ ] Update TODO.md with completion
+- [ ] attempt_completion
+
+**Next Step**: Edit App.jsx with resume functionality.
 

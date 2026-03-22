@@ -1656,6 +1656,124 @@ body {
 }
 
 /* ========================================
+   Resume Upload Styles (NEW)
+   ======================================== */
+.resume-card {
+  background: linear-gradient(145deg, var(--bg-card), var(--bg-tertiary));
+  border-radius: 20px;
+  padding: 2rem;
+  border: 1px solid var(--border-color);
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.resume-preview {
+  margin-bottom: 1.5rem;
+}
+
+.resume-viewer {
+  width: 100%;
+  height: 600px;
+  border-radius: 12px;
+  border: 2px solid var(--border-color);
+  box-shadow: var(--shadow-card);
+}
+
+.resume-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 1rem;
+}
+
+.resume-download-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.8rem 1.5rem;
+  background: var(--gradient-primary);
+  color: var(--bg-primary);
+  text-decoration: none;
+  border-radius: 8px;
+  font-weight: 600;
+  transition: var(--transition);
+}
+
+.resume-download-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-glow);
+}
+
+.resume-delete-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.8rem 1.5rem;
+  background: rgba(231, 76, 60, 0.2);
+  color: #e74c3c;
+  border: 1px solid rgba(231, 76, 60, 0.3);
+  border-radius: 8px;
+  font-weight: 500;
+  transition: var(--transition);
+  cursor: pointer;
+}
+
+.resume-delete-btn:hover {
+  background: #e74c3c;
+  color: white;
+  border-color: #e74c3c;
+}
+
+.resume-info {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+}
+
+.resume-placeholder {
+  text-align: center;
+  padding: 3rem 2rem;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.resume-placeholder-icon {
+  color: var(--text-muted);
+  margin-bottom: 1rem;
+}
+
+.resume-upload-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 1rem 2rem;
+  background: var(--gradient-primary);
+  color: var(--bg-primary);
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.resume-upload-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-glow);
+}
+
+@media (max-width: 768px) {
+  .resume-viewer {
+    height: 400px;
+  }
+  
+  .resume-actions {
+    flex-direction: column;
+  }
+}
+
+/* ========================================
    Upload Certificate Modal (NEW)
    ======================================== */
 .upload-modal-overlay {
