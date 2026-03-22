@@ -187,31 +187,52 @@ function App() {
     },
     {
       id: 2,
-      title: "Portfolio Website",
-      githubUrl: "https://github.com/harinimalshini/portfolio-react",
-      techStack: ["React", "Vite", "Tailwind CSS", "JavaScript"],
-      description: "This very portfolio website built with modern React 19, Vite build tool, custom CSS animations, and responsive design using CSS Grid and Flexbox."
+      title: "Bank-Account-Management-System",
+      githubUrl: "https://github.com/Hari-Mal/Bank-Account-Management-System-Python-.git",
+      techStack: ["Python"],
+      description: "This project is a console-based Bank Account Management System developed using Python. It uses object-oriented programming with classes such as BankAccount and BankSystem. The system allows users to create accounts, deposit and withdraw money, check balances, and transfer funds. It also includes input validation and error handling to prevent invalid transactions. The project demonstrates basic banking operations and Python programming skills"
     },
     {
       id: 3,
-      title: "E-Commerce Platform",
-      githubUrl: "https://github.com/harinimalshini/ecommerce-php",
-      techStack: ["PHP", "CodeIgniter", "MySQL", "Bootstrap"],
-      description: "Full-stack e-commerce application with shopping cart, payment gateway integration, admin dashboard, and order management system."
+      title: "Student-Performance-Analysis",
+      githubUrl: "https://github.com/Hari-Mal/Student-Performance-Analysis-EDA-Statistical-Testing-.git",
+      techStack: ["Python", "Jupyter Notebook", "Pandas", "Matplotlib", "Seaborn", "SciPy"],
+      description: "This project analyzes student performance using exploratory data analysis (EDA) techniques. Python libraries are used to visualize score distributions and examine relationships between study factors and results. Data cleaning is performed to remove missing values and duplicates. Statistical tests such as t-test, ANOVA, and chi-square are applied to identify significant patterns. The project demonstrates skills in data analysis, visualization, and statistical testing."
     },
     {
       id: 4,
-      title: "Task Management App",
-      githubUrl: "https://github.com/harinimalshini/task-manager-react",
-      techStack: ["React Native", "Expo", "Firebase", "Redux"],
-      description: "Mobile task management app with real-time sync, offline support, drag & drop UI, and push notifications using cross-platform React Native."
+      title: "Hospital-Management-Database",
+      githubUrl: "https://github.com/Hari-Mal/Hospital-Management-Database-SQL-.git",
+      techStack: ["MySQL", "SQL"],
+      description: "This project is a Hospital Management Database designed using MySQL. It stores and manages data about staff, patients, treatments, surgeries, medications, and allergies. The system uses relational tables with primary keys, foreign keys, and constraints to maintain data integrity. Many-to-many relationships are handled using junction tables. SQL queries are used to retrieve useful information such as doctor assignments and patient records."
     },
     {
       id: 5,
-      title: "Inventory Management",
-      githubUrl: "https://github.com/harinimalshini/inventory-python",
-      techStack: ["Python", "Tkinter", "SQLite", "Pandas"],
-      description: "Desktop inventory system with barcode scanning, stock tracking, sales reporting, and data analytics dashboard using Python GUI framework."
+      title: "Student-Management-System-Java",
+      githubUrl: "https://github.com/Hari-Mal/Student-Management-System-Java-OOP-Implementation-.git",
+      techStack: ["Java", "NetBeans IDE", "Object-Oriented Programming"],
+      description: "This project is a Student Management System developed using Java. It manages undergraduate and postgraduate student details and evaluates their academic performance. The system applies OOP concepts such as encapsulation, inheritance, and polymorphism. Different classes are used to represent student types and calculate performance based on GPA and research scores. The project demonstrates practical use of Java OOP concepts in an educational management system."
+    },
+    {
+      id: 6,
+      title: "University-Management-System",
+      githubUrl: "https://github.com/Hari-Mal/University-Management-System-using-Hibernate-Java-Maven-Project-.git",
+      techStack: ["Java", "Hibernate ORM", "Apache Maven", "MySQL", "Eclipse IDE", "WAMP Server"],
+      description: "This project is a University Management System developed using Java and Hibernate ORM. It connects to a MySQL database to manage university data such as students, courses, and faculty. Maven is used for dependency management and project building. The system supports CRUD operations through DAO classes and Hibernate configuration. It demonstrates database integration and object-relational mapping in a real-world application."
+    },
+    {
+      id: 7,
+      title: "Multi-Currency-Digital-Wallet-Java-Application",
+      githubUrl: "https://github.com/Hari-Mal/Multi-Currency-Digital-Wallet-Java-Application-.git",
+      techStack: ["Java", "JSON"],
+      description: " It applies Object-Oriented Programming concepts such as abstract classes, interfaces, inheritance, and polymorphism. The project demonstrates how a digital wallet can manage multiple currencies and financial transactions."
+    },
+    {
+      id: 8,
+      title: "GN-QuickCheck-A-Mindful-Digital-Platform-for-Accessing-Grama-Niladhari-Services",
+      githubUrl: "https://github.com/Hari-Mal/GN-QuickCheck-A-Mindful-Digital-Platform-for-Accessing-Grama-Niladhari-Services.git",
+      techStack: ["Figma"],
+      description: "GN QuickCheck is a digital platform designed to help citizens easily access Grama Niladhari services. The project focuses on reducing confusion and improving access to information about required documents and officer availability. It was developed using a user-centered design process including user research, personas, and usability testing. High-fidelity mobile and web prototypes were created using Figma. The system helps citizens prepare documents and plan visits efficiently."
     }
   ])
 
@@ -593,9 +614,10 @@ function App() {
           <div className="education-card">
             <div className="education-icon">🎓</div>
             <div>
-              <h3>BSc (Hons) Software Engineering</h3>
-              <p>University of Sri Lanka</p>
-              <p>Currently Studying</p>
+              <h3>BSE.HONS Bachelor of Software Engineering(Undergraduate), OPEN UNIVERSITY SRI LANKA.</h3>
+              <p> ADVANCED CERTIFICATED IN ENGLISH, British Way English Academy, GAMPAHA.(2023) </p>
+              <p>GCE ADVANCED LEVEL EXAMINATION IN MATHS STREAM (SINHALA MEDIUM), SRI SUMANGALA GIRL SCHOOL, PANADURA.(2022(2023))<b>Combined Maths- S Chemistry- S Physics- S </b></p>
+              <p>GCE ORDINARY LEVEL EXAMINATION, SRI SUMANGALA GIRL SCHOOL, PANADURA.(2018)<b>A-1 , B-5 , C-3</b> </p>
             </div>
           </div>
         </div>
