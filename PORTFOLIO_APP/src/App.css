@@ -82,7 +82,7 @@ body {
 }
 
 .nav-links {
-  display: flex;
+  display: flex !important;
   list-style: none;
   gap: 2rem;
 }
@@ -1763,15 +1763,7 @@ body {
   box-shadow: var(--shadow-glow);
 }
 
-@media (max-width: 768px) {
-  .resume-viewer {
-    height: 400px;
-  }
-  
-  .resume-actions {
-    flex-direction: column;
-  }
-}
+
 
 /* ========================================
    Upload Certificate Modal (NEW)
@@ -2160,69 +2152,11 @@ body {
 .contact { animation-delay: 0.5s; }
 
 /* ========================================
-   Responsive Design
+   Permanent Desktop Layout - Responsive Disabled
    ======================================== */
-@media (max-width: 1024px) {
-  .hero-content {
-    grid-template-columns: 1fr;
-    text-align: center;
-  }
 
-  .hero-summary {
-    margin: 0 auto 2rem;
-  }
 
-  .hero-links {
-    justify-content: center;
-  }
 
-  .hero-visual {
-    order: -1;
-  }
-
-  .code-block {
-    max-width: 400px;
-  }
-}
-
-@media (max-width: 768px) {
-  .nav-links {
-    display: none;
-  }
-
-  .hero-name {
-    font-size: 2.5rem;
-  }
-
-  .hero-title {
-    font-size: 1.2rem;
-  }
-
-  .section-title {
-    font-size: 2rem;
-  }
-
-  .profile-frame {
-    width: 250px;
-    height: 250px;
-  }
-
-  .projects-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .skills-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .achievements-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .contact-grid {
-    grid-template-columns: 1fr;
-  }
-}
 
 @media (max-width: 480px) {
   .hero {
