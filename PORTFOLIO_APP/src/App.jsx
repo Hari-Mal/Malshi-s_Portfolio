@@ -719,14 +719,14 @@ function App() {
             <h2 className="section-title">Achievements & Certifications</h2>
             <p className="section-subtitle">Click certificate for details, "View" to open full document</p>
             <button className="add-cert-btn" onClick={() => setShowUploadModal(true)}>
-              <Plus size={20} /> Add Certificate
+              <Plus size={20} /> 
             </button>
             <button className="save-cert-btn" onClick={() => {
               localStorage.setItem(STORAGE_KEY, JSON.stringify(certificatesData))
               console.log('Force saved', certificatesData.length, 'certificates')
               alert('Certificates force-saved to localStorage! Refresh to test.')
             }}>
-              💾 Force Save & Test
+              
             </button>
           </div>
           <div className={`certificates-grid ${certificatesVisible ? 'visible' : ''}`}>
