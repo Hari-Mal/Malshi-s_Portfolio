@@ -158,7 +158,7 @@ function App() {
       issuer: 'Applitools',
       date: '05-02-2025',
       color: '#6c42ac',
-      imageUrl: thewholeteam,
+      imageUrl: E:\Porrtfolio Final\Malshi-s_Portfolio\PORTFOLIO_APP\src\assets\the-whole-team.png,
       },
       {
       id: 'web-element-locators',
@@ -166,7 +166,7 @@ function App() {
       issuer: 'Applitools',
       date: '05-03-2025',
       color: '#6c42ac',
-      imageUrl: webelementlocators,
+      imageUrl: E:\Porrtfolio Final\Malshi-s_Portfolio\PORTFOLIO_APP\src\assets\web element locator.png,
       },
       {
       id: 'web-design-for-beginners',
@@ -174,7 +174,7 @@ function App() {
       issuer: 'Center for open and distance learning (CODL) University of Moratuwa Sri Lanka',
       date: '2024',
       color: '#822a86',
-      imageUrl: Web_Design_for_Beginners_E-Certificate.pdf2_page-0001,
+      imageUrl: E:\Porrtfolio Final\Malshi-s_Portfolio\PORTFOLIO_APP\src\assets\Web_Design_for_Beginners_E-Certificate.pdf2_page-0001.jpg,
       }
 
   
