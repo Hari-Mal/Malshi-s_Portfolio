@@ -174,7 +174,7 @@ function App() {
       issuer: 'Center for open and distance learning (CODL) University of Moratuwa Sri Lanka',
       date: '2024',
       color: '#822a86',
-      imageUrl: E:\Porrtfolio Final\Malshi-s_Portfolio\PORTFOLIO_APP\src\assets\Web_Design_for_Beginners_E-Certificate.pdf2_page-0001.jpg,
+      imageUrl: Web_Design_for_Beginners_E-Certificate,
       }
 
   
