@@ -54,7 +54,7 @@ function App() {
       issuer: 'Sololearn',
       date: '2024-02-20',
       color: '#4dddd6',
-      imageUrl: introCImage,
+      imageUrl: Introduction to C,
     },
     {
       id: 'java-intro',
@@ -62,7 +62,7 @@ function App() {
       issuer: 'Sololearn',
       date: '2024-10-24',
       color: '#4dddd6',
-      imageUrl: introJavaImage,
+      imageUrl: Introduction to java,
     },
     {
       id: 'python-intro',
@@ -70,7 +70,7 @@ function App() {
       issuer: 'Sololearn',
       date: '2024-03-21',
       color: '#4dddd6',
-      imageUrl: introPythonImage,
+      imageUrl: Introduction to python,
     },
     {
       id: 'sql-intro',
@@ -78,7 +78,7 @@ function App() {
       issuer: 'Sololearn',
       date: '2024-04-24',
       color: '#4dddd6',
-      imageUrl: introSQLImage,
+      imageUrl: Introduction to SQL,
     },
     {
       id: 'python-intermediate',
@@ -86,7 +86,7 @@ function App() {
       issuer: 'Sololearn',
       date: '2024-05-10',
       color: '#4dddd6',
-      imageUrl: pythonIntermediateImage,   
+      imageUrl: Python intermidiate,   
     },
     {
       id: 'java-intermediate',
@@ -94,7 +94,7 @@ function App() {
       issuer: 'Sololearn',
       date: '2024-11-25',
       color: '#4dddd6',
-      imageUrl: javaIntermediateImage,  
+      imageUrl: Java intermidiate,  
      },
       {
       id: 'inventory-management',
@@ -102,7 +102,7 @@ function App() {
       issuer: 'HP LIFE online course',
       date: '2024-04-02',
       color: '#3257c5',
-      imageUrl: inventorymanagement,  
+      imageUrl: Inventory Management_page-0001,  
       },
       {
       id: 'effective-leadership',
@@ -110,7 +110,7 @@ function App() {
       issuer: 'HP LIFE online course',
       date: '2024-03-20',
       color: '#3257c5',
-      imageUrl: effectiveleadership,  
+      imageUrl: Effective Leadership_page-0001,  
       },
       {
       id: 'social-media-marketing',
@@ -118,7 +118,7 @@ function App() {
       issuer: 'HP LIFE online course',
       date: '2024-04-02',
       color: '#3257c5',
-      imageUrl: socialmediamarketing,  
+      imageUrl: Social Media Marketing_page-0001,  
       },
       {
       id: 'your-target-audience',
@@ -126,7 +126,7 @@ function App() {
       issuer: 'HP LIFE online course',
       date: '2024-04-02',
       color: '#3257c5',
-      imageUrl: yourtargetaudience,
+      imageUrl: Your Target Audience_page-0001,
       },
       {
       id: 'api-test-automation',
@@ -134,7 +134,7 @@ function App() {
       issuer: 'Applitools',
       date: '05-02-2025',
       color: '#6c42ac',
-      imageUrl: apitestautomation,
+      imageUrl: API test automation,
       },
       {
       id: 'code-less-test-automation',
@@ -142,7 +142,7 @@ function App() {
       issuer: 'Applitools',
       date: '05-03-2025',
       color: '#6c42ac',
-      imageUrl: codelesstestautomation,
+      imageUrl: codeless test automation,
       },
       {
       id: 'setting-a-foundation',
@@ -150,7 +150,7 @@ function App() {
       issuer: 'Applitools',
       date: '05-02-2025',
       color: '#6c42ac',
-      imageUrl: settingafoundation,
+      imageUrl: setting a foundation,
       },
       {
       id: 'the-whole-team',
@@ -158,7 +158,7 @@ function App() {
       issuer: 'Applitools',
       date: '05-02-2025',
       color: '#6c42ac',
-      imageUrl: E:\Porrtfolio Final\Malshi-s_Portfolio\PORTFOLIO_APP\src\assets\the-whole-team.png,
+      imageUrl: the-whole-team,
       },
       {
       id: 'web-element-locators',
@@ -166,7 +166,7 @@ function App() {
       issuer: 'Applitools',
       date: '05-03-2025',
       color: '#6c42ac',
-      imageUrl: E:\Porrtfolio Final\Malshi-s_Portfolio\PORTFOLIO_APP\src\assets\web element locator.png,
+      imageUrl: web element locator,
       },
       {
       id: 'web-design-for-beginners',
