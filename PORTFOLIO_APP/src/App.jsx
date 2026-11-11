@@ -638,14 +638,15 @@ function App() {
 
           <ul className="nav-links">
             {[
-              'home',
-              'about',
-              'skills',
-              'projects',
-              'education',
-              'achievements',
-              'resume',
-              'contact'
+               'home',
+               'about',
+               'skills',
+               'projects',
+               'education',
+               'work-experience',
+               'achievements',
+               'resume',
+               'contact'
             ].map(section => (
               <li key={section}>
                 <a
@@ -909,6 +910,97 @@ function App() {
           </div>
         </div>
       </section>
+
+      {/* Work Experience */}
+<section id="work-experience" className="section work-experience">
+  <div className="container">
+
+    <h2 className="section-title">
+      Professional Experience
+    </h2>
+
+    <div className="experience-card">
+
+      <div className="experience-header">
+
+        <div className="experience-icon">
+          <Code size={32} />
+        </div>
+
+        <div className="experience-heading">
+          <h3>Software Developer Intern</h3>
+
+          <h4>
+            Sri Lanka Telecom (SLT-Mobitel)
+          </h4>
+
+          <p className="experience-location">
+            Head Office
+          </p>
+        </div>
+
+      </div>
+
+      <div className="experience-duration">
+        <Calendar size={18} />
+
+        <span>6-Month Internship</span>
+
+        <span className="experience-date">
+          06 April 2026 – 06 October 2026
+        </span>
+      </div>
+
+      <div className="experience-description">
+
+        <h4>Key Responsibilities & Achievements</h4>
+
+        <ul>
+          <li>
+            Gained practical experience in software development
+            through the design and development of a Bus Ticket
+            Booking System.
+          </li>
+
+          <li>
+            Contributed to developing application features and
+            user interfaces to support bus and trip management,
+            ticket bookings, and related operations.
+          </li>
+
+          <li>
+            Worked with front-end development technologies and
+            database integration to support application
+            functionality.
+          </li>
+
+          <li>
+            Applied software engineering principles,
+            problem-solving techniques, and debugging practices
+            during project development.
+          </li>
+
+          <li>
+            Improved technical skills, independent learning
+            abilities, and understanding of software development
+            workflows in a professional environment.
+          </li>
+        </ul>
+
+      </div>
+
+      <div className="experience-tags">
+        <span>Software Development</span>
+        <span>Frontend Development</span>
+        <span>Database Integration</span>
+        <span>Problem Solving</span>
+        <span>Bus Ticket Booking System</span>
+      </div>
+
+    </div>
+
+  </div>
+</section>
 
       {/* Achievements and Certifications */}
       <section id="achievements" className="section achievements">
