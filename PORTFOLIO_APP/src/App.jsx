@@ -676,7 +676,7 @@ function App() {
             </h2>
 
             <p className="hero-summary">
-              I'm a passionate Software Engineering undergraduate who
+               I'm a passionate Software Engineering undergraduate who
               enjoys transforming ideas into real-world digital solutions.
               I love exploring modern technologies, building clean user
               interfaces, and solving problems through code.
